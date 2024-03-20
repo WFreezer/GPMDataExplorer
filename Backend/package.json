@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "GPMDataExplorer is a web application for accessing and visualizing data from NASA's Global Precipitation Measurement (GPM) mission. Users can search for specific data sets, apply filters based on radiometers, satellites, regions, and dates, and then download the data in ASCII format.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
