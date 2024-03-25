@@ -10,17 +10,29 @@ const dbConfig = {
   database: 'gpmdataexplorer',  
 };
 
-// Crear la conexión a la base de datos
-const connection = mysql.createConnection(dbConfig);
+// Crear un pool de conexiones
+const pool = mysql.createPool(dbConfig);
 
-// Verificar si la conexión fue exitosa
-connection.connect((err) => {
-  if (err) {
-    console.error('Error al conectar con la base de datos:', err);
-    return;
-  }
-  console.log('Conexión exitosa con la base de datos');
-});
+// Función para ejecutar consultas a la base de datos
+function query(sql, values) {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-// Exportar la conexión para que pueda ser utilizada en otros módulos
-module.exports = connection;
+      connection.query(sql, values, (error, results) => {
+        connection.release();
+
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  });
+}
+
+module.exports = { query };

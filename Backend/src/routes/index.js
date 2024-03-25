@@ -1,6 +1,9 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
+
+const sessionRoutes = require('./sessionRoutes');
+
+router.use('/sessions', sessionRoutes);
 
 
-
-module.exports = app;
+module.exports = router;
