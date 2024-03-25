@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .header {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .main-content {
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .welcome {
+    margin-bottom: 20px; /* Añade un espacio entre el título y el recuadro de nombre */
+  }
+  
+  .welcome h1 {
+    font-family: "Arial Black", sans-serif; /* Cambia la fuente del título */
+    color: #333; /* Cambia el color del texto del título */
+    font-size: 36px; /* Ajusta el tamaño del texto del título */
+    margin-bottom: 10px; /* Ajusta el margen inferior del título */
+  }
+  
+  .input-box {
+    margin-top: 10px; /* Ajusta el margen superior */
+  }
+  
+  .input-box label {
+    margin-right: 5px; /* Ajusta el margen derecho del label */
+  }
+  
+  input {
+    padding: 5px; /* Ajusta el relleno */
+    margin-right: 5px; /* Ajusta el margen derecho */
+  }
+  
+  hr {
+    width: 70%; /* Ajusta la longitud de la línea divisoria */
+    border: none;
+    border-top: 1px solid #ccc; /* Cambia el color de la línea divisoria */
+    margin: 20px auto; /* Ajusta el margen de la línea divisoria */
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #87e3c1; /* Cambia el color de fondo del botón */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif; /* Cambia la fuente del botón */
+    font-size: 16px; /* Ajusta el tamaño de la fuente del botón */
+  }
+  
+  button:hover {
+    background-color: #8e4ebc; /* Cambia el color de fondo al pasar sobre el botón */
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px; /* Ajusta el margen superior del mensaje de error */
+  }
+  
+  
