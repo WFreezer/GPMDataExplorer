@@ -7,6 +7,7 @@ const getAllSessions = async (req, res) => {
   try {
     // Obtener todas las sesiones desde el modelo
     const sessions = await Session.getAll();
+    console.log("Sessions from database:", sessions); 
     res.json(sessions);
   } catch (error) {
     console.error('Error al obtener las sesiones:', error);
@@ -31,6 +32,9 @@ const createSession = async (req, res) => {
     console.log("Expiration :" + expiration);
     const newSession = await Session.create(username, expiration);
     console.log('Nueva sesión creada:', newSession);
+    
+     // Establecer una cookie de sesión en la respuesta
+     res.cookie('sessionId', newSession.session_id, { maxAge: 120 * 60 * 1000, httpOnly: true, secure: true });
     
     res.status(201).json(newSession);
   } catch (error) {

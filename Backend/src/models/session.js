@@ -7,7 +7,8 @@ const Session = {
   getAll: async () => {
     try {
       // Realizar la consulta a la base de datos para obtener todas las sesiones
-      const [rows] = await db.query('SELECT * FROM session');
+      const rows = await db.query('SELECT * FROM session');
+      
       return rows;
     } catch (error) {
       throw new Error(`Error fetching sessions: ${error.message}`);

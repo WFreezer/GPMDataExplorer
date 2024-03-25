@@ -4,6 +4,7 @@ const cors = require('cors');
 const db = require('./config/dbconnector');
 const routes = require('./routes');
 const cleanExpiredSessions = require('./middlewares/cleanExpiredSessions');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware para permitir solicitudes de otros dominios (CORS)
 app.use(cors());
+
+// Middleware para manejo de cookies
+app.use(cookieParser());
 
 // Usar cleanExpiredSessions(limpia sesiones expiradas)
 app.use(cleanExpiredSessions);
