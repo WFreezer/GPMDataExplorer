@@ -1,23 +1,49 @@
 // models/session.js
-
 const db = require('../config/dbconnector');
 
-// Define el modelo de sesión
-const Session = (sequelize, DataTypes) => {
-  const Session = sequelize.define('Session', {
-    session_id: {
-      type: DataTypes.STRING,
-      primaryKey: true
-    },
-    name: DataTypes.STRING,
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    expiration: DataTypes.DATE
-  });
+// Modelo de sesión
+const Session = {
+  // Método para obtener todas las sesiones
+  getAll: async () => {
+    try {
+      // Realizar la consulta a la base de datos para obtener todas las sesiones
+      const [rows] = await db.query('SELECT * FROM session');
+      return rows;
+    } catch (error) {
+      throw new Error(`Error fetching sessions: ${error.message}`);
+    }
+  },
 
-  return Session;
+  // Método para crear una nueva sesión
+  create: async (name, expiration) => {
+    try {
+      // Insertar la nueva sesión en la base de datos
+      console.log("Dentro de create")
+      const sessionId = generateUniqueId();
+      console.log("SessionId: "+ sessionId);
+      const insertQuery = 'INSERT INTO session (session_id, name, created_at, expiration) VALUES (?, ?, NOW(), ?)';
+      console.log("Aqui llega");
+      await db.query(insertQuery, [sessionId, name, expiration]);
+      console.log("Aqui llega2");
+      const newSession = {
+        session_id: sessionId,
+        name: name,
+        created_at: new Date(),
+        expiration: expiration
+      };
+      console.log("Session: "+ newSession.name);
+      return newSession;
+    } catch (error) {
+      throw new Error(`Error creating session: ${error.message}`);
+    }
+  }
 };
 
-module.exports = (sequelize, DataTypes) => Session(sequelize, DataTypes);
+// Función para generar un ID único
+function generateUniqueId() {
+  const timestamp = new Date().getTime().toString(36);
+  const randomPart = Math.random().toString(36).substr(2, 5);
+  return timestamp + randomPart;
+}
+
+module.exports = Session;
