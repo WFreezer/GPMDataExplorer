@@ -19,18 +19,16 @@ const Session = {
   create: async (name, expiration) => {
     try {
       // Insertar la nueva sesión en la base de datos
-      console.log("Dentro de create")
+      console.log("Dentro de create del model")
       const sessionId = generateUniqueId();
       console.log("SessionId: "+ sessionId);
       const insertQuery = 'INSERT INTO session (session_id, name, created_at, expiration) VALUES (?, ?, NOW(), ?)';
-      console.log("Aqui llega");
       await db.query(insertQuery, [sessionId, name, expiration]);
-      console.log("Aqui llega2");
       const newSession = {
         session_id: sessionId,
         name: name,
-        created_at: new Date(),
-        expiration: expiration
+        created_at: new Date().toLocaleString(),
+        expiration: expiration.toLocaleString()
       };
       console.log("Session: "+ newSession.name);
       return newSession;

@@ -24,12 +24,9 @@ const createSession = async (req, res) => {
     
     // Crear la nueva sesión con la fecha de expiración programada
     const expiration = new Date();
-    expiration.setMinutes(expiration.getSeconds() + 120); // Sumar 120 minutos
-    console.log('Fecha de expiración:', expiration);
+    expiration.setMinutes(expiration.getMinutes() + 120);
     
     // Insertar la nueva sesión en la base de datos
-    console.log("Username: "+ username);
-    console.log("Expiration :" + expiration);
     const newSession = await Session.create(username, expiration);
     console.log('Nueva sesión creada:', newSession);
     
