@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SessionService } from 'src/app/services/session.service';
+import { SessionModel } from 'src/app/models/session-model';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { SessionService } from 'src/app/services/session.service';
 export class HomeComponent {
   username: string = '';
   showErrorMessage: boolean = false;
+  session: SessionModel | undefined;
 
 
   constructor(private router: Router, private sessionService: SessionService) {
@@ -26,6 +28,8 @@ export class HomeComponent {
       this.sessionService.createSession(this.username).subscribe(
         response => {
           console.log('Sesión creada:', response);
+          this.session=response;
+          console.log(this.session?.name);
           // Realizar acciones adicionales después de crear la sesión si es necesario
         },
         error => {
