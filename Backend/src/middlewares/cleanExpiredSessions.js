@@ -5,7 +5,7 @@ const cleanExpiredSessions = async (req, res, next) => {
         // Eliminar sesiones expiradas
         const deleteQuery = 'DELETE FROM session WHERE expiration < NOW()';
         await db.query(deleteQuery);
-        
+        console.log("Realizando limpieza de sesiones expiradas");
         // Llama a next() para pasar al siguiente middleware en la cadena
         next();
     } catch (error) {

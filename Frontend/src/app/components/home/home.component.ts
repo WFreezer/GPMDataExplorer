@@ -30,11 +30,11 @@ export class HomeComponent {
           console.log('Sesión creada:', response);
           this.session=response;
           console.log(this.session?.name);
-          // Realizar acciones adicionales después de crear la sesión si es necesario
+          
         },
         error => {
           console.error('Error al crear la sesión:', error);
-          // Manejar el error de acuerdo a tus necesidades
+          
         }
       );
     }

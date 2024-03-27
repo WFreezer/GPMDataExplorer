@@ -6,12 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { RadiometerselectionComponent } from './components/radiometerselection/radiometerselection.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    RadiometerselectionComponent
   ],
   imports: [
     BrowserModule,
