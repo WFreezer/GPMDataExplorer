@@ -21,6 +21,10 @@ const cleanExpiredSessions = async (req, res, next) => {
             // Eliminar datos meteorológicos asociados a los filtros eliminados
             const deleteMeteorologicalDataQuery = `DELETE FROM meteorological_data WHERE id_filter IN (SELECT id_filter FROM filter WHERE product_id IN (SELECT product_id FROM product WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')})))`;
             await db.query(deleteMeteorologicalDataQuery);
+
+            // Eliminar las sesiones expiradas de la tabla de sesiones
+            const deleteSessionsQuery = `DELETE FROM session WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')})`;
+            await db.query(deleteSessionsQuery);
         }
 
         console.log("Realizando limpieza de sesiones expiradas");
