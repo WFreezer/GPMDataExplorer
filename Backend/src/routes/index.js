@@ -5,6 +5,6 @@ const sessionRoutes = require('./sessionRoutes');
 const productsRoutes = require('./productRoutes');
 
 router.use('/sessions', sessionRoutes);
-router.use('/product',productsRoutes);
+router.use('/products',productsRoutes);
 
 module.exports = router;

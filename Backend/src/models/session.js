@@ -35,7 +35,17 @@ const Session = {
     } catch (error) {
       throw new Error(`Error creating session: ${error.message}`);
     }
+  },
+  exists: async (sessionId) => {
+    try {
+      const sessionExistsQuery = 'SELECT COUNT(*) AS count FROM session WHERE session_id = ?';
+      const sessionExistResult = await db.query(sessionExistsQuery, [sessionId]);
+       return sessionExistResult[0].count > 0;
+    } catch (error) {
+      throw new Error(`Error checking if session exists: ${error.message}`);
+    }
   }
+
 };
 
 // Función para generar un ID único
