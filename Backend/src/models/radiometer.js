@@ -8,6 +8,14 @@ const Radiometer = {
     } catch (error) {
       throw new Error(`Error fetching radiometers: ${error.message}`);
     }
+  },
+  getById: async (radiometerId) => {
+    try {
+      const row = await db.query('SELECT * FROM radiometer WHERE radiometer_id = ?', [radiometerId]);
+      return row[0]; // Devuelve el primer radiómetro encontrado
+    } catch (error) {
+      throw new Error(`Error fetching radiometer by ID: ${error.message}`);
+    }
   }
 };
 

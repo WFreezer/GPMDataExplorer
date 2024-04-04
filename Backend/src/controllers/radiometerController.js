@@ -12,6 +12,17 @@ const getAllRadiometers = async (req, res) => {
   }
 };
 
+const getRadiometerById = async (req, res) => {
+  try {
+    const { radiometerId } = req.params;
+    const radiometer = await Radiometer.getById(radiometerId);
+    res.status(200).json(radiometer);
+  } catch (error) {
+    console.error('Error fetching radiometer by ID:', error);
+    res.status(500).json({ message: 'Error fetching radiometer by ID' });
+  }
+};
 module.exports = {
-  getAllRadiometers
+  getAllRadiometers,
+  getRadiometerById
 };
