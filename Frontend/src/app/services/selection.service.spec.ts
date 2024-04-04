@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RadiometerService } from './radiometer.service';
+import { SelectionService } from './selection.service';
 
 describe('RadiometerService', () => {
-  let service: RadiometerService;
+  let service: SelectionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RadiometerService);
+    service = TestBed.inject(SelectionService);
   });
 
   it('should be created', () => {

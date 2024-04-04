@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from 'src/app/services/session.service';
-import { RadiometerService } from 'src/app/services/radiometer.service';
+import { SelectionService } from 'src/app/services/selection.service';
 import { Radiometer } from 'src/app/models/radiometer.model';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ export class RadiometerselectionComponent implements OnInit {
   sessionId: string | undefined;
   radiometers: Radiometer[] = [];
 
-  constructor(private router: Router, private sessionService: SessionService, private radiometerService: RadiometerService) { }
+  constructor(private router: Router, private sessionService: SessionService, private selectionService: SelectionService) { }
 
   ngOnInit(): void {
     // Aquí recuperamos el session_id al inicializar el componente
@@ -24,7 +24,7 @@ export class RadiometerselectionComponent implements OnInit {
   }
 
   loadRadiometers(): void {
-    this.radiometerService.getAllRadiometers().subscribe(
+    this.selectionService.getAllRadiometers().subscribe(
       radiometers => {
         this.radiometers = radiometers;
       },

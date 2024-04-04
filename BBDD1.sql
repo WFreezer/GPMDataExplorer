@@ -14,6 +14,8 @@ CREATE TABLE satellite (
   satellite_id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255),
   radiometer_id INT,
+  description TEXT,
+  shortname VARCHAR(255),
   FOREIGN KEY (radiometer_id) REFERENCES radiometer(radiometer_id)
 );
 
@@ -69,8 +71,6 @@ CREATE TABLE meteorological_data (
   FOREIGN KEY (id_filter) REFERENCES filter(id_filter)
 );
 
-ALTER TABLE satellite ADD COLUMN description TEXT;
-ALTER TABLE satellite ADD COLUMN shortname VARCHAR(255);
 
 INSERT INTO radiometer (name)
 VALUES ('AMSR2'),
