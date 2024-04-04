@@ -38,6 +38,9 @@ export class RadiometerselectionComponent implements OnInit {
   selectRadiometer(radiometer: Radiometer): void {
     // Imprimir el ID del radiómetro seleccionado en la consola
     console.log('ID del radiómetro seleccionado:',radiometer.radiometer_id);
+
+    // Navegar a la vista SatelliteSelection con el ID del radiómetro como parámetro
+  this.router.navigate(['/satelliteselection', radiometer.radiometer_id]);
   }
   
 }
