@@ -1,4 +1,5 @@
 // home.component.ts
+
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,10 +16,8 @@ export class HomeComponent {
   showErrorMessage: boolean = false;
   session: SessionModel | undefined;
 
+  constructor(private router: Router, private sessionService: SessionService) {}
 
-  constructor(private router: Router, private sessionService: SessionService) {
-
-  }
   comenzar() {
     if (this.username.trim() === '') {
       this.showErrorMessage = true;
@@ -28,13 +27,16 @@ export class HomeComponent {
       this.sessionService.createSession(this.username).subscribe(
         response => {
           console.log('Sesión creada:', response);
-          this.session=response;
-          console.log(this.session?.name);
+          this.session = response; // Asignar la respuesta completa a la propiedad session
+         
+          this.sessionService.setSessionId(response.session_id); // Utilizar response.session_id
           
+         
+          // Navegar a la página 'radiometerselection' con el ID de sesión como parámetro
+          this.router.navigate(['/radiometerselection']);
         },
         error => {
           console.error('Error al crear la sesión:', error);
-          
         }
       );
     }
