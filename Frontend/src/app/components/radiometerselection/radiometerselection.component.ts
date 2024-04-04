@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from 'src/app/services/session.service';
+import { RadiometerService } from 'src/app/services/radiometer.service';
+import { Radiometer } from 'src/app/models/radiometer.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-radiometerselection',
@@ -8,12 +11,34 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class RadiometerselectionComponent implements OnInit {
   sessionId: string | undefined;
+  radiometers: Radiometer[] = [];
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private router: Router, private sessionService: SessionService, private radiometerService: RadiometerService) { }
 
   ngOnInit(): void {
     // Aquí recuperamos el session_id al inicializar el componente
     this.sessionId = this.sessionService.getSessionId();
     console.log('Session ID:', this.sessionId);
+    //Carga radiometers disponibles
+    this.loadRadiometers();
   }
+
+  loadRadiometers(): void {
+    this.radiometerService.getAllRadiometers().subscribe(
+      radiometers => {
+        this.radiometers = radiometers;
+      },
+      error => {
+        console.error('Error fetching radiometers:', error);
+        // Aquí podrías mostrar un mensaje de error al usuario si lo deseas
+      }
+    );
+  }
+
+  selectRadiometer(radiometer: Radiometer): void {
+    // Imprimir el ID del radiómetro seleccionado en la consola
+    console.log('ID del radiómetro seleccionado:',radiometer.radiometer_id);
+  }
+  
 }
+

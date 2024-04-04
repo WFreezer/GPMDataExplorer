@@ -1,0 +1,23 @@
+.radiometer-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .radiometer-box {
+    width: 200px; /* Ancho del recuadro */
+    height: 100px; /* Alto del recuadro */
+    margin: 10px; /* Margen entre recuadros */
+    background-color: #f0f0f0; /* Color de fondo */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 5px; /* Borde redondeado */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el recuadro */
+  }
+  
+  .radiometer-box:hover {
+    background-color: #e0e0e0; /* Cambia el color de fondo al pasar el cursor */
+  }
+  
