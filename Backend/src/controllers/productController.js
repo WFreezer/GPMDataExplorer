@@ -16,6 +16,7 @@ const createProduct = async (req, res) => {
     if (!sessionExists) {
       return res.status(404).json({ message: 'La sesión no existe' });
     }
+    
     console.log('Sesion existe: ' + sessionExists);
       // Crear el nuevo producto en la base de datos
       const newProduct = await Product.create(session_id, radiometer_id, satellite_id);
