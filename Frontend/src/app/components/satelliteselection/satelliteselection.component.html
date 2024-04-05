@@ -1,1 +1,15 @@
-<p>satelliteselection works!</p>
+<div *ngIf="radiometer">
+    <h2>Radiometer: {{ radiometer.name }}</h2>
+   
+    <div *ngFor="let satellite of satellites" class="satellite-box" (click)="selectSatellite(satellite)">
+      <div class="satellite-info">
+        <div class="satellite-header">
+          <h3>{{ satellite.name }}</h3>
+          <p class="satellite-description">{{ satellite.description }}</p>
+         
+        </div>
+        <p>{{ satellite.shortname }}</p>
+      </div>
+    </div>
+  </div>
+  

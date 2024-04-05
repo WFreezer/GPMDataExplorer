@@ -1,0 +1,31 @@
+.satellite-box {
+    display: flex;
+    flex-direction: column;
+   
+    margin: 10px auto; /* Centramos horizontalmente */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Asegura que el padding no se sume al ancho total */
+    background-color: #45d46b;
+  }
+  
+  .satellite-box:hover {
+    background-color: #8e4ebc;
+  }
+  
+  .satellite-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .satellite-description {
+    margin-top: 10px;
+    text-align: right;
+    width: 100%; /* Ancho máximo de la descripción */
+    overflow: hidden; /* Ocultar el texto que exceda el ancho máximo */
+   
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+  }
