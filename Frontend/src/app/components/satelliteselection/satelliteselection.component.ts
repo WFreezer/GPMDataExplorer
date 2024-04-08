@@ -5,7 +5,8 @@ import { SelectionService } from 'src/app/services/selection.service';
 import { SessionService } from 'src/app/services/session.service';
 import { Radiometer } from 'src/app/models/radiometer.model';
 import { Satellite } from 'src/app/models/satellite.model';
-import { response } from 'express';
+import { ProductModel } from 'src/app/models/product.model';
+
 @Component({
   selector: 'app-satelliteselection',
   standalone: true,
@@ -14,7 +15,7 @@ import { response } from 'express';
   styleUrl: './satelliteselection.component.css'
 })
 export class SatelliteselectionComponent {
-  sessionId: string | undefined;
+  sessionId: string ; // Valor predeterminado vacío
   radiometerId: number= 0;
   radiometer: Radiometer | undefined;
   satellites: Satellite[] = [];
@@ -26,7 +27,7 @@ export class SatelliteselectionComponent {
 
   ngOnInit(): void {
     // Aquí recuperamos el session_id al inicializar el componente
-    this.sessionId = this.sessionService.getSessionId();
+    this.sessionId = this.sessionService.getSessionId() ;
     // Obtener radiometerId de los parámetros de ruta
     this.route.params.subscribe(params => {
       
@@ -73,12 +74,25 @@ export class SatelliteselectionComponent {
       }
     );
   }
+  
  //Selecciona satelite desde html
   selectSatellite(satellite: Satellite): void {
     // Imprimir el ID del radiómetro seleccionado en la consola
-    console.log('ID del radiómetro seleccionado:',satellite.radiometer_id);
+    console.log('ID del radiómetro seleccionado:',satellite.satellite_id);
 
-    
+    // Llama al servicio para crear un nuevo producto
+    this.selectionService.createProduct(this.sessionId, this.radiometerId, satellite.satellite_id).subscribe(
+      (product: ProductModel) => {
+        // Maneja el producto creado, puedes imprimirlo en la consola o realizar otras acciones
+        console.log('Producto creado:', product.product_id);
+        console.log('Producto creado:', product);
+        console.log('Producto creado:', product.session_id);
+      },
+      error => {
+        // Maneja los errores en caso de que ocurran
+        console.error('Error creating product:', error);
+        // Aquí podrías mostrar un mensaje de error al usuario si lo deseas
+      }
+    );
   }
-  
 }

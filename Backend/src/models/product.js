@@ -27,7 +27,7 @@ const Product = {
       console.log('Nuevo producto creado:', { id: result.insertId, session_id: sessionId, radiometer_id: radiometerId, satellite_id: satelliteId });
 
       const newProduct = { 
-        id: result.insertId, 
+        product_id: result.insertId, 
         session_id: sessionId, 
         radiometer_id: radiometerId, 
         satellite_id: satelliteId 
