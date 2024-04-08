@@ -17,7 +17,7 @@ export class SelectionService {
   }
   //Obtiene un listado de todos los satelites de un radiometro
   getAllSatellitesByRadiometerId(radiometerId: number): Observable<Satellite[]> {
-    return this.http.get<Satellite[]>(`${this.apiUrl}/satellites/${radiometerId}`);
+    return this.http.get<Satellite[]>(`${this.apiUrl}/satellites/radiometer/${radiometerId}`);
   }
   //Obtiene un radiometro por ID
   getRadiometerById(radiometerId: number): Observable<Radiometer> {

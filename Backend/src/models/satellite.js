@@ -9,7 +9,17 @@ const Satellite = {
     } catch (error) {
       throw new Error(`Error fetching satellites by radiometer id: ${error.message}`);
     }
+  },
+  getById: async (satelliteId) => {
+    try {
+      const query = 'SELECT * FROM satellite WHERE satellite_id = ?';
+      const [satellite] = await db.query(query, [satelliteId]);
+      return satellite;
+    } catch (error) {
+      throw new Error(`Error fetching satellite by id: ${error.message}`);
+    }
   }
 };
+
 
 module.exports = Satellite;
