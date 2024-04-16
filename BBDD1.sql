@@ -34,6 +34,17 @@ CREATE TABLE product (
   FOREIGN KEY (radiometer_id) REFERENCES radiometer(radiometer_id),
   FOREIGN KEY (satellite_id) REFERENCES satellite(satellite_id)
 );
+-- Crear tabla para seleccionar variables
+CREATE TABLE variables_select (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    value VARCHAR(50) NOT NULL
+);
+
+-- Crear tabla para seleccionar layer
+CREATE TABLE layer_values (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  value VARCHAR(10) 
+);
 
 -- Crear tabla filter
 CREATE TABLE filter (
@@ -45,10 +56,13 @@ CREATE TABLE filter (
   longitud_max DECIMAL,
   latitud_min DECIMAL,
   latitud_max DECIMAL,
-  variables_select ENUM('value1', 'value2', 'value3'),
-  layer ENUM('value1', 'value2', 'value3'),
-  FOREIGN KEY (product_id) REFERENCES product(product_id)
+  variable_id INT,
+  layer_id INT,
+  FOREIGN KEY (product_id) REFERENCES product(product_id),
+  FOREIGN KEY (variable_id) REFERENCES variables_select(id),
+  FOREIGN KEY (layer_id) REFERENCES layer_values(id) 
 );
+
 
 -- Crear tabla meteorological_data
 CREATE TABLE meteorological_data (
@@ -134,3 +148,35 @@ INSERT INTO satellite (shortname, name, radiometer_id, start_date, end_date, des
 ('GPM_3GPROFF13SSMI_DAY_CLIM','F13: Climate-based Radiometer Precipitation Profiling L3 1 day 0.25 degree x 0.25 degree V07', 9,'','', ''),
 ('GPM_3GPROFF14SSMI_DAY_CLIM','F14: Climate-based Radiometer Precipitation Profiling L3 1 day 0.25 degree x 0.25 degree V07', 9,'','', ''),
 ('GPM_3GPROFF15SSMI_DAY_CLIM','F15: Climate-based Radiometer Precipitation Profiling L3 1 day 0.25 degree x 0.25 degree V07', 9,'','', '');
+
+
+
+INSERT INTO variables_select (value) VALUES
+('cloudWater'),
+('cloudWaterPath'),
+('convectivePrecipitation'),
+('fractionQuality0'),
+('fractionQuality1'),
+('fractionQuality2'),
+('fractionQuality3'),
+('frozenPrecipitation'),
+('graupel'),
+('iceWaterPath'),
+('lat_bnds'),
+('latentHeating'),
+('layer_bnds'),
+('lon_bnds'),
+('npixPrecipitation'),
+('npixTotal'),
+('rainWater'),
+('rainWaterPath'),
+('snow'),
+('surfacePrecipitation'),
+('surfaceTypeIndex');
+
+
+
+INSERT INTO layer_values (value) VALUES
+('0.25'), ('0.75'), ('1.25'), ('1.75'), ('2.25'), ('2.75'), ('3.25'), ('3.75'), ('4.25'), ('4.75'),
+('5.25'), ('5.75'), ('6.25'), ('6.75'), ('7.25'), ('7.75'), ('8.25'), ('8.75'), ('9.25'), ('9.75'),
+('10.5'), ('11.5'), ('12.5'), ('13.5'), ('14.5'), ('15.5'), ('16.5'), ('17.5');
