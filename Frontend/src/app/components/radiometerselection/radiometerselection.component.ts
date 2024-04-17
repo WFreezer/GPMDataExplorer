@@ -18,7 +18,7 @@ export class RadiometerselectionComponent implements OnInit {
   ngOnInit(): void {
     // Aquí recuperamos el session_id al inicializar el componente
     this.sessionId = this.sessionService.getSessionId();
-    console.log('Session ID:', this.sessionId);
+    console.log('Session id: ' + this.sessionId);
     //Carga radiometers disponibles
     this.loadRadiometers();
   }
@@ -36,9 +36,8 @@ export class RadiometerselectionComponent implements OnInit {
   }
 
   selectRadiometer(radiometer: Radiometer): void {
-    // Imprimir el ID del radiómetro seleccionado en la consola
-    console.log('ID del radiómetro seleccionado:',radiometer.radiometer_id);
-
+    this.selectionService.setRadiometerName(radiometer.name);
+    console.log(radiometer.name);
     // Navegar a la vista SatelliteSelection con el ID del radiómetro como parámetro
   this.router.navigate(['/satelliteselection', radiometer.radiometer_id]);
   }

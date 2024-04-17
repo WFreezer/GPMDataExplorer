@@ -10,7 +10,26 @@ import { ProductModel } from '../models/product.model';
 export class SelectionService {
   private apiUrl = 'http://localhost:3000/api';
 
+  private RADIOMETER_NAME_KEY = 'radiometerName';
+  private SATELLITE_NAME_KEY = 'satelliteName';
+
   constructor(private http: HttpClient) {}
+  setRadiometerName(name: string): void {
+    localStorage.setItem(this.RADIOMETER_NAME_KEY, name);
+  }
+
+  getRadiometerName(): string | null {
+    return localStorage.getItem(this.RADIOMETER_NAME_KEY);
+  }
+
+  setSatelliteName(name: string): void {
+    localStorage.setItem(this.SATELLITE_NAME_KEY, name);
+  }
+
+  getSatelliteName(): string | null {
+    return localStorage.getItem(this.SATELLITE_NAME_KEY);
+  }
+  
   //Obtiene un listado de todos los radiómetros
   getAllRadiometers(): Observable<Radiometer[]> {
     return this.http.get<Radiometer[]>(`${this.apiUrl}/radiometers`);

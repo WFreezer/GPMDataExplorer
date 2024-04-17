@@ -28,6 +28,7 @@ export class SatelliteselectionComponent {
   ngOnInit(): void {
     // Aquí recuperamos el session_id al inicializar el componente
     this.sessionId = this.sessionService.getSessionId() ;
+    console.log('Session id: ' + this.sessionId);
     // Obtener radiometerId de los parámetros de ruta
     this.route.params.subscribe(params => {
       
@@ -39,50 +40,41 @@ export class SatelliteselectionComponent {
      if (this.radiometerId !== undefined) 
     this.getRadiometerById(this.radiometerId);
      this.loadSatellites();
-    
-
-    console.log('Session ID:', this.sessionId);
-    console.log('Radiometer ID:', this.radiometerId);
-    
-  
+        
   }
 
   getRadiometerById(radiometerId: number): void {
     this.selectionService.getRadiometerById(radiometerId).subscribe(
       radiometer => {
         this.radiometer = radiometer;
-        console.log('Radiometer Name:', this.radiometer.name);
       },
       error => {
         console.error('Error fetching radiometer by ID:', error);
-        // Manejar el error si es necesario
       }
     );
   }
 
   //Carga todos los satellites
   loadSatellites(): void {
-    console.log("SatellitesLoad");
     this.selectionService.getAllSatellitesByRadiometerId(this.radiometerId).subscribe(
       satellites => {
         this.satellites =satellites;
-        console.log("Satellites: "+ this.satellites);
       },
       error => {
         console.error('Error fetching radiometers:', error);
-        // Aquí podrías mostrar un mensaje de error al usuario si lo deseas
       }
     );
   }
   
  //Selecciona satelite desde html
   selectSatellite(satellite: Satellite): void {
-    // Imprimir el ID del radiómetro seleccionado en la consola
-    console.log('ID del radiómetro seleccionado:',satellite.satellite_id);
+    
 
     // Llama al servicio para crear un nuevo producto
     this.selectionService.createProduct(this.sessionId, this.radiometerId, satellite.satellite_id).subscribe(
       (product: ProductModel) => {
+        this.selectionService.setSatelliteName(satellite.shortname);
+        console.log(satellite.shortname);
           // Navegar a la vista filter con el ID del product como parámetro
          this.router.navigate(['/filter', product.product_id]);
       },

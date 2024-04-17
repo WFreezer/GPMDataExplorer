@@ -22,16 +22,12 @@ export class HomeComponent {
     if (this.username.trim() === '') {
       this.showErrorMessage = true;
     } else {
-      console.log('Usuario ingresado:', this.username);
       this.sessionService.setUsername(this.username);
       this.sessionService.createSession(this.username).subscribe(
         response => {
-          console.log('Sesión creada:', response);
           this.session = response; // Asignar la respuesta completa a la propiedad session
          
           this.sessionService.setSessionId(response.session_id); // Utilizar response.session_id
-          
-         
           // Navegar a la página 'radiometerselection' con el ID de sesión como parámetro
           this.router.navigate(['/radiometerselection']);
         },

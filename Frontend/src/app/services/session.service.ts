@@ -24,12 +24,10 @@ export class SessionService {
 
   setSessionId(sessionId: string) {
     this.cookieService.set('sessionId', sessionId, 2 * 60 * 60);
-    console.log('sessionId establecida:', sessionId);
   }
 
   getSessionId(): string | undefined {
     const sessionId = this.cookieService.get('sessionId');
-    console.log('sessionId obtenida:', sessionId);
     return sessionId;
   }
 
