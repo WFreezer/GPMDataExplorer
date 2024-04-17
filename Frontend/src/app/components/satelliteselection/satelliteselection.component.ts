@@ -83,10 +83,8 @@ export class SatelliteselectionComponent {
     // Llama al servicio para crear un nuevo producto
     this.selectionService.createProduct(this.sessionId, this.radiometerId, satellite.satellite_id).subscribe(
       (product: ProductModel) => {
-        // Maneja el producto creado, puedes imprimirlo en la consola o realizar otras acciones
-        console.log('Producto creado:', product.product_id);
-        console.log('Producto creado:', product);
-        console.log('Producto creado:', product.session_id);
+          // Navegar a la vista filter con el ID del product como parámetro
+         this.router.navigate(['/filter', product.product_id]);
       },
       error => {
         // Maneja los errores en caso de que ocurran

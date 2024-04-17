@@ -1,13 +1,14 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 20px; /* Añade un relleno a los lados para pantallas más pequeñas */
   }
   
   .header {
-    text-align: right;
+    text-align: center; /* Alinea el texto al centro en todas las pantallas */
     margin-bottom: 20px;
   }
   
@@ -17,8 +18,24 @@
     border-radius: 10px;
     padding: 20px;
     background-color: #f9f9f9;
+    max-width: 100%; /* Limita el ancho máximo del contenido principal */
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+
   }
-  
+  @media screen and (max-width: 600px) {
+    .main-content {
+      max-width: 80%; /* Limita el ancho del contenido en pantallas pequeñas */
+      margin: 0 auto; /* Centra el contenido horizontalmente */
+      padding: 10px; /* Ajusta el relleno del contenido principal en pantallas pequeñas */
+    }
+    /* Ajusta el tamaño de fuente y el espaciado del título en pantallas pequeñas */
+    .main-content h1 {
+      font-size: 24px !important; /* Ajusta el tamaño del título para pantallas pequeñas */
+      margin-bottom: 10px; /* Añade un margen inferior para separar el título del contenido */
+      word-wrap: break-word; /* Permite que las palabras se dividan automáticamente si son demasiado largas */
+    }
+    
+  }
   .welcome {
     margin-bottom: 20px; /* Añade un espacio entre el título y el recuadro de nombre */
   }
@@ -41,6 +58,7 @@
   input {
     padding: 5px; /* Ajusta el relleno */
     margin-right: 5px; /* Ajusta el margen derecho */
+    max-width: 100%;
   }
   
   hr {
