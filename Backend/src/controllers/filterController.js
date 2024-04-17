@@ -66,11 +66,30 @@ const getFilterByProductId = async (req, res) => {
     }
 };
 
+// Función para obtener las fechas disponibles para un producto específico
+const getAvailableDatesForProduct = async (req, res) => {
+    const product_id = req.params.product_id;
+    try {
+        const availableDates = await filterModel.getAvailableDatesForProduct(product_id);
+        if (!availableDates) {
+            res.status(404).json({ message: 'Fechas disponibles no encontradas para el producto especificado' });
+            return;
+        }
+        res.json(availableDates);
+    } catch (error) {
+        console.error('Error al obtener las fechas disponibles para un producto específico:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};
+
 // Exportar las funciones del controlador
 module.exports = {
     getVariables,
     getLayers,
     createFilter,
     getFilterById,
-    getFilterByProductId
+    getFilterByProductId,
+    getAvailableDatesForProduct
 };
+
+

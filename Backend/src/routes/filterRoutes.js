@@ -17,4 +17,8 @@ router.get('/:id_filter', filterController.getFilterById);
 // Ruta para obtener un filtro por product_id
 router.get('/product/:product_id', filterController.getFilterByProductId);
 
+// Obtener las fechas disponibles para un producto específico
+router.get('/product/:product_id/available-dates', filterController.getAvailableDatesForProduct);
+
+
 module.exports = router;

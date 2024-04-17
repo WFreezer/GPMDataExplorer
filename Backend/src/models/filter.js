@@ -26,7 +26,17 @@ const Filter = {
   },
   getFilterByProductId: async (product_id) => {
     // Implementa la lógica para obtener un filtro por product_id
+  },
+  getAvailableDatesForProduct: async (product_id) => {
+    try {
+      const sql = 'SELECT start_date, end_date FROM satellite WHERE satellite_id IN (SELECT satellite_id FROM product WHERE product_id = ?)';
+      const availableDates = await db.query(sql, [product_id]);
+      return availableDates;
+    } catch (error) {
+      throw new Error(`Error fetching available dates for product: ${error.message}`);
+    }
   }
 };
+
 
 module.exports = Filter;
