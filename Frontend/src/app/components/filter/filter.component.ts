@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
 import { SelectionService } from 'src/app/services/selection.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-filter',
@@ -13,11 +14,18 @@ export class FilterComponent implements OnInit {
   sessionId: string;
   radiometerName: string;
   satelliteName: string;
+  isDateRangeOpen: boolean = false;
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+  availableStartDate: string | null = null;
+  availableEndDate: string | null = null;
+
 
   constructor(
     private route: ActivatedRoute,
     private sessionService: SessionService,
-    private selectionService: SelectionService
+    private selectionService: SelectionService, 
+    private filterService: FilterService
   ) { }
 
   ngOnInit(): void {
@@ -33,5 +41,32 @@ export class FilterComponent implements OnInit {
     this.radiometerName = this.selectionService.getRadiometerName();
     // Obtener el nombre del satélite seleccionado del servicio de selección
     this.satelliteName = this.selectionService.getSatelliteName();
+
+    this.loadAvailableDates();
+  }
+
+  toggleDateRange(): void {
+    this.isDateRangeOpen = !this.isDateRangeOpen;
+    if (this.isDateRangeOpen) {
+      this.loadAvailableDates();
+    }
+  }
+  loadAvailableDates(): void {
+    console.log("Productid: "+ this.productId);
+    this.filterService.getAvailableDatesForProduct(this.productId).subscribe(
+      (dates: any[]) => {
+        console.log("dates: ", dates);
+        this.availableStartDate = new Date(dates[0].start_date).toLocaleDateString();
+        this.availableEndDate = new Date(dates[0].end_date).toLocaleDateString();
+     
+      },
+      (error) => {
+        console.error('Error obteniendo las fechas disponibles:', error);
+      }
+    );
+  }
+  clearDates(): void {
+    this.startDate = null;
+    this.endDate = null;
   }
 }
