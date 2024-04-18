@@ -38,17 +38,17 @@
 }
   
   /* Estilos para el contenedor del rango de fechas */
-  .date-container {
+  .filter-container {
     margin-top: 20px;
   }
   
   /* Estilos para las etiquetas de fecha */
-  .date-container label {
+  .filter-container label {
     margin-right: 10px;
   }
   
   /* Estilos para los campos de fecha */
-  .date-container input[type="date"] {
+  .filter-container input[type="date"] {
     margin:5px;
     padding: 8px;
     border: 1px solid #ccc;

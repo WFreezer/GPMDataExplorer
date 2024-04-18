@@ -1,7 +1,7 @@
 <div class="container">
   <h1>{{ satelliteName }}</h1>
 
-  
+  <!-- RANGO DE FECHAS -->
   <div class="filter">
     <!-- Botón para mostrar u ocultar el rango de fechas -->
     <div>
@@ -11,7 +11,7 @@
     </div>
   
     <!-- Contenedor para el rango de fechas -->
-    <div *ngIf="isDateRangeOpen" class="date-container">
+    <div *ngIf="isDateRangeOpen" class="filter">
         <!-- Selector de fecha de inicio -->
         <label for="startDate">From:</label>
         <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" [min]="availableStartDate" [max]="availableEndDate" >
@@ -22,4 +22,24 @@
     </div>
 </div>
 
+  <!-- RANGO DE Region -->
+<div class="filter">
+    <!-- Botón para mostrar u ocultar el rango de fechas -->
+    <div>
+      <span class="date-range-text">Region:  -180, -70, 180, 70</span>
+      <button (click)="toggleRegionRange()">Select Region</button>
+      
+  </div>
+
+  <!-- Contenedor para el rango de regiones -->
+  <div *ngIf="isRegionRangeOpen" class="filter">
+  <!-- Input para ingresar las coordenadas -->
+  <label for="regionCoordinates">Enter Region Coordinates : </label>
+  <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates">
+
+  </div>
+
+
+</div>
+<button (click)="createFilter()">Ok</button>
 </div>
