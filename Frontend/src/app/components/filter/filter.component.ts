@@ -50,23 +50,28 @@ export class FilterComponent implements OnInit {
     if (this.isDateRangeOpen) {
       this.loadAvailableDates();
     }
+    console.log('TOGGLE startDate:', this.startDate);
+  console.log('TOGGLE endDate:', this.endDate);
   }
   loadAvailableDates(): void {
-    console.log("Productid: "+ this.productId);
     this.filterService.getAvailableDatesForProduct(this.productId).subscribe(
-      (dates: any[]) => {
-        console.log("dates: ", dates);
-        this.availableStartDate = new Date(dates[0].start_date).toLocaleDateString();
-        this.availableEndDate = new Date(dates[0].end_date).toLocaleDateString();
-     
-      },
-      (error) => {
-        console.error('Error obteniendo las fechas disponibles:', error);
-      }
+        (dates: any[]) => {
+            
+          this.availableStartDate = new Date(dates[0].start_date).toISOString().split('T')[0];
+          this.availableEndDate = new Date(dates[0].end_date).toISOString().split('T')[0];
+            console.log('Available End Date:', this.availableStartDate);
+            console.log('Available End Date:', this.availableEndDate);
+        },
+        (error) => {
+            console.error('Error obteniendo las fechas disponibles:', error);
+        }
     );
-  }
+}
+
   clearDates(): void {
     this.startDate = null;
     this.endDate = null;
+    console.log('CLEAR startDate:', this.startDate);
+  console.log('CLEAR endDate:', this.endDate);
   }
 }

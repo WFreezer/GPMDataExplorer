@@ -1,24 +1,25 @@
-<div>
-    <h1>{{ satelliteName }}</h1>
+<div class="container">
+  <h1>{{ satelliteName }}</h1>
+
   
+  <div class="filter">
     <!-- Botón para mostrar u ocultar el rango de fechas -->
     <div>
-        <span>Date Range: {{ availableStartDate }} to {{ availableEndDate }}</span>
-       <br>
-        <button (click)="toggleDateRange()">Select Date </button>
-      </div>
-      
+        <span class="date-range-text">Date Range: {{ availableStartDate }} to {{ availableEndDate }}</span>
+        
+        <button (click)="toggleDateRange()">Select Date</button>
+    </div>
   
     <!-- Contenedor para el rango de fechas -->
-    <div *ngIf="isDateRangeOpen">
-      <!-- Selector de fecha de inicio -->
-      <label for="startDate">From:</label>
-      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" >
+    <div *ngIf="isDateRangeOpen" class="date-container">
+        <!-- Selector de fecha de inicio -->
+        <label for="startDate">From:</label>
+        <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" [min]="availableStartDate" [max]="availableEndDate" >
   
-      <!-- Selector de fecha de fin -->
-      <label for="endDate">To:</label>
-      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" >
+        <!-- Selector de fecha de fin -->
+        <label for="endDate">To:</label>
+        <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [min]="availableStartDate" [max]="availableEndDate" >
     </div>
+</div>
 
-  </div>
-  
+</div>

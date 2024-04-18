@@ -1,0 +1,59 @@
+ /* Estilos para el título */
+ h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+/* Estilos para contenedores */
+.filter {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+ 
+  /* Estilos para el texto de rango de fechas */
+.date-range-text {
+    font-weight: bold;
+    color: #333; /* Cambia el color del texto si lo deseas */
+  }
+  
+  /* Estilos para el botón de selección de fecha */
+  .filter button {
+    margin-left: 10px;
+    padding: 5px 5px;
+    background-color: #87e3c1; /* Cambia el color de fondo del botón */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif; /* Cambia la fuente del botón */
+    font-size: 16px; /* Ajusta el tamaño de la fuente del botón */
+ 
+  }
+  
+  .filter button:hover {
+    background-color: #8e4ebc; /* Cambia el color de fondo al pasar sobre el botón */
+}
+  
+  /* Estilos para el contenedor del rango de fechas */
+  .date-container {
+    margin-top: 20px;
+  }
+  
+  /* Estilos para las etiquetas de fecha */
+  .date-container label {
+    margin-right: 10px;
+  }
+  
+  /* Estilos para los campos de fecha */
+  .date-container input[type="date"] {
+    margin:5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  
+  
