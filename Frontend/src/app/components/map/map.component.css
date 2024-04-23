@@ -1,0 +1,48 @@
+@import "~leaflet/dist/leaflet.css";
+@import "~leaflet-draw/dist/leaflet.draw.css";
+
+#map {
+    width: 90%;
+    height: 400px; /* o el tamaño que desees */
+    margin: 20px auto; /* 50px de margen superior e inferior, centrar horizontalmente */
+}
+
+button {
+    display: block; /* Para que ocupe todo el ancho disponible */
+    margin: 20px auto 10px; /* Margen superior de 20px, margen inferior de 10px, centrado horizontalmente */
+    padding: 10px 20px; /* Relleno interno de 10px arriba y abajo, 20px a la izquierda y a la derecha */
+    background-color:#4CAF50; /* Cambia el color de fondo del botón */
+    color: #09110e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif; /* Cambia la fuente del botón */
+    font-size: 16px; /* Ajusta el tamaño de la fuente del botón */
+}
+
+button:hover {
+    background-color: #8e4ebc; /* Cambia el color de fondo al pasar sobre el botón */
+}
+/* Estilos para el contenedor de coordenadas */
+#coordinates {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 10px; /* Reducimos el padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin: 20px auto; /* Centramos horizontalmente y agregamos margen superior e inferior */
+    max-width: 400px; /* Establecemos un ancho máximo */
+}
+
+#coordinates h3 {
+    margin-top: 0;
+    font-size: 14px; /* Tamaño de fuente ligeramente reducido */
+    font-weight: bold;
+    color: #333333;
+}
+
+#coordinates p {
+    margin: 0;
+    font-size: 16px; /* Tamaño de fuente ligeramente reducido */
+    color: #666666;
+}
