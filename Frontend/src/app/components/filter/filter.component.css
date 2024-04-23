@@ -12,7 +12,10 @@
     margin: 20px;
   }
   
- 
+ input {
+  width: auto;
+  margin:10px;
+ }
   /* Estilos para el texto de rango de fechas */
 .date-range-text {
     font-weight: bold;

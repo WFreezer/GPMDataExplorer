@@ -1,15 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterService {
+  
+  private startDate: Date | null = null;
+  private endDate: Date | null = null;
+  private rectangleCoordinates: number[] = [];
 
   private apiUrl = 'http://localhost:3000/api/filter';
 
   constructor(private http: HttpClient) { }
+
+  setStartDate(date: Date): void {
+    this.startDate = date;
+  }
+
+  getStartDate(): Date | null {
+    return this.startDate;
+  }
+
+  setEndDate(date: Date): void {
+    this.endDate = date;
+  }
+
+  getEndDate(): Date | null {
+    return this.endDate;
+  }
+  //Guarda las coordenadas. LLamado en map.component
+  setRectangleCoordinates(coordinates: number[]): void {
+    this.rectangleCoordinates = coordinates;
+  }
+
+  //recoge las coordenadas almacenadas al dibujar el area map.component
+  getRectangleCoordinates(): number[] {
+    return this.rectangleCoordinates;
+  }
 
    // Método para obtener las variables de filtro
    getVariables(): Observable<any> {

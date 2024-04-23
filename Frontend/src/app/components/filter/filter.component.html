@@ -14,11 +14,13 @@
     <div *ngIf="isDateRangeOpen" class="filter">
         <!-- Selector de fecha de inicio -->
         <label for="startDate">From:</label>
-        <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" [min]="availableStartDate" [max]="availableEndDate" >
-  
+        <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" [max]="endDate ? endDate : null">
+
         <!-- Selector de fecha de fin -->
         <label for="endDate">To:</label>
-        <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [min]="availableStartDate" [max]="availableEndDate" >
+        <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [min]="startDate ? startDate : null">
+
+        <button (click)="dateLoad">Guardar</button>
     </div>
 </div>
 
@@ -28,16 +30,17 @@
     <div>
       <span class="date-range-text">Region:  -180, -70, 180, 70</span>
       <button (click)="toggleRegionRange()">Select Region</button>
-      
+      <button (click)="goToMap()">Map</button>
   </div>
 
   <!-- Contenedor para el rango de regiones -->
   <div *ngIf="isRegionRangeOpen" class="filter">
-  <!-- Input para ingresar las coordenadas -->
-  <label for="regionCoordinates">Enter Region Coordinates : </label>
-  <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates">
-
+    <!-- Input para ingresar las coordenadas -->
+    <label for="regionCoordinates">Enter Region Coordinates : </label>
+    <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates">
+    
   </div>
+  
 
 
 </div>

@@ -2,7 +2,6 @@
 
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { SessionService } from 'src/app/services/session.service';
 import { SessionModel } from 'src/app/models/session.model';
 
