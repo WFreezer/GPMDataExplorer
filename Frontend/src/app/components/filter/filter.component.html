@@ -14,13 +14,13 @@
     <div *ngIf="isDateRangeOpen" class="filter">
         <!-- Selector de fecha de inicio -->
         <label for="startDate">From:</label>
-        <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" [max]="endDate ? endDate : null">
+        <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" [min]="availableStartDate" [max]="endDate ? endDate : null" [max]="availableEndDate">
 
         <!-- Selector de fecha de fin -->
         <label for="endDate">To:</label>
-        <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [min]="startDate ? startDate : null">
+        <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [min]="availableStartDate" [min]="startDate ? startDate : null" [max]="availableEndDate">
 
-        <button (click)="dateLoad">Guardar</button>
+        <button (click)="dateLoad()">Guardar</button>
     </div>
 </div>
 
@@ -31,18 +31,45 @@
       <span class="date-range-text">Region:  -180, -70, 180, 70</span>
       <button (click)="toggleRegionRange()">Select Region</button>
       <button (click)="goToMap()">Map</button>
+      <div *ngIf="regionCoordinatesError" class="error-message"  >
+        {{ regionCoordinatesError }}
+      </div>
   </div>
 
   <!-- Contenedor para el rango de regiones -->
   <div *ngIf="isRegionRangeOpen" class="filter">
     <!-- Input para ingresar las coordenadas -->
     <label for="regionCoordinates">Enter Region Coordinates : </label>
-    <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates">
-    
-  </div>
+    <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates" disabled>
+    <!-- Contenedor para el mensaje de error de las coordenadas -->
   
-
-
+  </div>
 </div>
+
+<!-- Contenedor para Selector de variables -->
+<div class="filter">
+  <label class="date-range-text">Select Variables:<span *ngIf="!areVariablesSelected()" style="color: red;">Please select at least one variable.</span></label>
+  <button (click)="toggleSelectedVariables()">Variables</button>
+  <div *ngIf="isSelectorVariablesOpen" class="filter">
+    <div *ngFor="let variable of variables">
+      <input type="checkbox" id="{{ variable.id }}"  [(ngModel)]="selectedVariables[variable.id]">
+      <label for="{{ variable.id }}">{{ variable.value }}</label>
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor para Layer -->
+<div class="filter">
+  <label class="date-range-text">Select Layers:</label>
+  <button (click)="toggleSelectedLayers()">Layers</button>
+  <div *ngIf="isSelectorLayersOpen" class="filter">
+    <div *ngFor="let layer of layers">
+      <input type="checkbox" id="{{ layer.id }}" [(ngModel)]="selectedLayers[layer.id]">
+      <label for="{{ layer.id }}">{{ layer.value }}</label>
+    </div>
+  </div>
+</div>
+
+
 <button (click)="createFilter()">Ok</button>
 </div>

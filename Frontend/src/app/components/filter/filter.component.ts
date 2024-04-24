@@ -16,16 +16,26 @@ export class FilterComponent implements OnInit {
   sessionId: string;
   radiometerName: string;
   satelliteName: string;
+  
   isDateRangeOpen: boolean = false;
-  isRegionRangeOpen: boolean = false;
   startDate: Date | null = null;
   endDate: Date | null = null;
   availableStartDate: string | null = null;
   availableEndDate: string | null = null;
+
+  isRegionRangeOpen: boolean = false;
   regionCoordinates: string = '';
   rectangleCoordinates: number[] = [];
   regionCoordinatesError: string | null = null; // Variable para mostrar errores de formato
-  
+
+  selectedVariables: { [key: number]: boolean } = {}; // Objeto para mantener el estado de selección de variables
+  isSelectorVariablesOpen: boolean = false; // Agrega esta propiedad para controlar la visibilidad del contenedor de variables
+  variables: any[] = []; // Agrega esta propiedad para almacenar las variables disponibles
+
+  layers: any[] = []; // Propiedad para almacenar las capas disponibles
+  selectedLayers: { [key: number]: boolean } = {}; // Objeto para mantener el estado de selección de las capas
+  isSelectorLayersOpen: boolean = false; // Propiedad para controlar la visibilidad del contenedor de las capas
+
   filter: Filter = {
     id_filter: 0,
     product_id: 0,
@@ -35,8 +45,8 @@ export class FilterComponent implements OnInit {
     longitud_max: 0,
     latitud_min: 0,
     latitud_max: 0,
-    variable_id: 0,
-    layer_id: 0
+    variable_ids: "",
+    layer_ids: ""
   };
 
   constructor(
@@ -61,25 +71,56 @@ export class FilterComponent implements OnInit {
     // Obtener el nombre del satélite seleccionado del servicio de selección
     this.satelliteName = this.selectionService.getSatelliteName();
   
-   
-  
+    // Cargar las fechas disponibles
     this.loadAvailableDates();
   
-    //Si se ha accedido a map guarda las coordenadas del rectangulo
+    //Si se ha accedido a map, guarda las coordenadas del rectángulo
     this.rectangleCoordinates = this.filterService.getRectangleCoordinates();
-    console.log("RectangleCoordenates: " + this.rectangleCoordinates);
-    if(this.rectangleCoordinates.length){
-      this.isRegionRangeOpen=true;
+    
+    if (this.rectangleCoordinates.length) {
+      this.isRegionRangeOpen = true;
       this.regionCoordinates = this.rectangleCoordinates.join(', ');
     }
-    console.log("RegionCoordinates: " + this.regionCoordinates);
+    
+      
   }
   
   toggleDateRange(): void {
     this.isDateRangeOpen = !this.isDateRangeOpen;
     this.isRegionRangeOpen = false;
+    this.isSelectorVariablesOpen = false;
+    this.isSelectorLayersOpen = false;
     if (this.isDateRangeOpen) {
       this.loadAvailableDates();
+    }
+  }
+
+  toggleRegionRange(): void {
+    this.isDateRangeOpen = false;
+    this.isRegionRangeOpen = !this.isRegionRangeOpen;
+    this.isSelectorVariablesOpen = false;
+    this.isSelectorLayersOpen = false;
+  }
+
+  
+  toggleSelectedVariables(): void {
+    this.isSelectorVariablesOpen = !this.isSelectorVariablesOpen;
+    this.isDateRangeOpen = false;
+    this.isRegionRangeOpen = false;
+    this.isSelectorLayersOpen = false;
+    if (this.isSelectorVariablesOpen) {
+      // Cargar las variables disponibles
+      this.loadVariables();
+    }
+  }
+  toggleSelectedLayers(): void {
+    this.isSelectorLayersOpen = !this.isSelectorLayersOpen;
+    this.isDateRangeOpen = false;
+    this.isSelectorVariablesOpen = false;
+    this.isRegionRangeOpen = false;
+    if (this.isSelectorLayersOpen) {
+      // Carga las capas disponibles
+      this.loadLayers();
     }
   }
 
@@ -88,8 +129,7 @@ export class FilterComponent implements OnInit {
       (dates: any[]) => {
         this.availableStartDate = new Date(dates[0].start_date).toISOString().split('T')[0];
         this.availableEndDate = new Date(dates[0].end_date).toISOString().split('T')[0];
-        console.log('Available End Date:', this.availableStartDate);
-        console.log('Available End Date:', this.availableEndDate);
+    
       },
       (error) => {
         console.error('Error obteniendo las fechas disponibles:', error);
@@ -98,35 +138,67 @@ export class FilterComponent implements OnInit {
   }
 
   dateLoad(): void {
+    
     this.filterService.setStartDate(this.startDate);
     this.filterService.setEndDate(this.endDate);
+    console.log("dateLoad()");
+    console.log("dateLoad().startDate: "+ this.startDate);
+    console.log("dateLoad().endDate: "+ this.endDate);
     // Cierra el rango de fechas
     this.toggleDateRange();
   }
   
 
   goToMap(): void {
-    
     this.router.navigate(['/map', this.productId]);
   }
 
-  toggleRegionRange(): void {
-    this.isDateRangeOpen = false;
-    this.isRegionRangeOpen = !this.isRegionRangeOpen;
-    console.log('isRegionRangeOpen:', this.isRegionRangeOpen); // Agregar este console.log
-}
+ 
+  
+  areVariablesSelected(): boolean {
+    return Object.values(this.selectedVariables).some(value => value);
+  }
+  
 
+  loadVariables(): void {
+    
+    this.filterService.getVariables().subscribe(
+      (data: any[]) => {
+        this.variables = data;
+      },
+      (error) => {
+        console.error('Error obteniendo las variables:', error);
+      }
+    );
+  }
+
+  loadLayers(): void {
+    this.filterService.getLayers().subscribe(
+      (data: any[]) => {
+        this.layers = data;
+      },
+      (error) => {
+        console.error('Error obteniendo las capas:', error);
+      }
+    );
+  }
 
   createFilter(): void {
     // Asigna las fechas seleccionadas
     this.filter.date_from = this.filterService.getStartDate();
     this.filter.date_to = this.filterService.getEndDate();
-
-    
+    console.log("createFilter())");
+    console.log("dateLoad().filter.date_from: "+ this.filter.date_from);
+    console.log("dateLoad().filter.date_to: "+ this.filter.date_to);
     // Procesa las coordenadas de región ingresadas por el usuario
     const coordinates = this.regionCoordinates.split(',').map(coord => parseFloat(coord.trim()));
     console.log("Long_min22222: "+ this.filter.longitud_min);
      if (coordinates.length === 4 && !coordinates.some(isNaN)) {
+      const [longMin, latMin, longMax, latMax] = coordinates;
+      if (longMin < -180 || longMax > 180 || latMin < -90 || latMax > 90) {
+          this.regionCoordinatesError = 'Las coordenadas exceden los límites de la región.';
+          return; // Evita continuar con la creación del filtro
+      }
       this.filter.longitud_min = coordinates[0];
       this.filter.latitud_min = coordinates[1];
       this.filter.longitud_max = coordinates[2];
@@ -135,14 +207,32 @@ export class FilterComponent implements OnInit {
     } else {
       this.regionCoordinatesError = 'Las coordenadas deben ser cuatro números separados por comas.';
     }
-  
+
+     // Obtén los IDs de las variables seleccionadas y guárdalos en filter.variable_ids
+     const selectedVariableIds = Object.entries(this.selectedVariables)
+     .filter(([_, isSelected]) => isSelected)
+     .map(([variableId, _]) => variableId);
+   
+      this.filter.variable_ids = selectedVariableIds.join(',');
+
+   // Obtén los IDs de las capas seleccionadas y guárdalos en filter.layer_ids
+   const selectedLayerIds = Object.entries(this.selectedLayers)
+   .filter(([_, isSelected]) => isSelected)
+   .map(([layerId, _]) => layerId);
+ 
+    this.filter.layer_ids = selectedLayerIds.join(',');
 
     // Log de verificación
-    console.log('Ok startDate:', this.startDate);
-    console.log('Ok endDate:', this.endDate);
+    console.log('startDate:', this.filter.date_from);
+    console.log('endDate:', this.filter.date_to);
     console.log('Longitude Min:', this.filter.longitud_min);
     console.log('Longitude Max:', this.filter.longitud_max);
     console.log('Latitude Min:', this.filter.latitud_min);
     console.log('Latitude Max:', this.filter.latitud_max);
+    console.log('Variable IDs:', this.filter.variable_ids);
+    console.log('Layer IDs:', this.filter.layer_ids);
+    console.log('Filtro:' + this.filter);
   }
+
+  
 }

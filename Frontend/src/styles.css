@@ -6,3 +6,6 @@ body {
     background-color: #87e3c1; 
   }
   
+  * {
+    user-select: none;
+  }

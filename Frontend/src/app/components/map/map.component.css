@@ -2,8 +2,8 @@
 @import "~leaflet-draw/dist/leaflet.draw.css";
 
 #map {
-    width: 90%;
-    height: 400px; /* o el tamaño que desees */
+    width: 50%;
+    height: 300px; /* o el tamaño que desees */
     margin: 20px auto; /* 50px de margen superior e inferior, centrar horizontalmente */
 }
 

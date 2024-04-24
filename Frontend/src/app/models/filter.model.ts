@@ -7,7 +7,7 @@ export interface Filter {
     longitud_max: number;
     latitud_min: number;
     latitud_max: number;
-    variable_id: number;
-    layer_id: number;
+    variable_ids: string;
+    layer_ids: string;
   }
   
