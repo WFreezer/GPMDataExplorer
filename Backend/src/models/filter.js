@@ -26,12 +26,36 @@ const Filter = {
     const result = await db.query(query, values);
     return result.insertId; // Retorna el ID del nuevo filtro creado
   },
+
+  // Función para obtener un filtro por id_filter
   getFilterById: async (id_filter) => {
-    // Implementa la lógica para obtener un filtro por id_filter
-  },
-  getFilterByProductId: async (product_id) => {
-    // Implementa la lógica para obtener un filtro por product_id
-  },
+    const query = 'SELECT * FROM filter WHERE id_filter = ?';
+    const values = [id_filter];
+    try {
+        const rows = await db.query(query, values);
+        if (rows.length === 0) {
+            throw new Error(`Filter with id ${id_filter} not found`);
+        }
+        return rows[0]; // Retorna el primer filtro encontrado con el ID especificado
+    } catch (error) {
+        throw new Error(`Error fetching filter by id: ${error.message}`);
+    }
+},
+getFilterByProductId: async (product_id) => {
+  const query = 'SELECT * FROM filter WHERE product_id = ?';
+  const values = [product_id];
+  try {
+      const rows = await db.query(query, values);
+      console.log('Filters retrieved:', rows); // Agregar log para los filtros recuperados
+      if (rows.length === 0) {
+          throw new Error(`Filters with product_id ${product_id} not found`);
+      }
+      return rows; // Retorna los filtros encontrados con el ID especificado
+  } catch (error) {
+      throw new Error(`Error fetching filters by product_id: ${error.message}`);
+  }
+},
+
   getAvailableDatesForProduct: async (product_id) => {
     try {
       const sql = 'SELECT start_date, end_date FROM satellite WHERE satellite_id IN (SELECT satellite_id FROM product WHERE product_id = ?)';

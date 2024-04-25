@@ -14,7 +14,7 @@ router.post('/', filterController.createFilter);
 // Ruta para obtener un filtro por id_filter
 router.get('/:id_filter', filterController.getFilterById);
 
-// Ruta para obtener un filtro por product_id
+// Ruta para obtener los filtros por product_id
 router.get('/product/:product_id', filterController.getFilterByProductId);
 
 // Obtener las fechas disponibles para un producto específico

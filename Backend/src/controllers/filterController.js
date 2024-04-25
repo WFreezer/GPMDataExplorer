@@ -37,36 +37,43 @@ const createFilter = async (req, res) => {
     }
 };
 
-module.exports = {
-    createFilter
-};
 
 
-// Función para obtener un filtro por id_filter
 const getFilterById = async (req, res) => {
     const id_filter = req.params.id_filter;
     try {
         const filter = await filterModel.getFilterById(id_filter);
-        if (!filter) {
-            res.status(404).json({ message: 'Filtro no encontrado' });
-            return;
+        if (filter) {
+            console.log('Filter found:', filter); // Registro para verificar el filtro encontrado
+            res.status(200).json({ success: true, filter });
+        } else {
+            console.log('Filter not found for id:', id_filter); // Registro para indicar que el filtro no se encontró
+            res.status(404).json({ success: false, message: 'Filter not found' });
         }
-        res.json(filter);
     } catch (error) {
-        console.error('Error al obtener un filtro por id_filter:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error fetching filter by id:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
 
-// Función para obtener un filtro por product_id
+// Función para obtener los filtros con product_id
 const getFilterByProductId = async (req, res) => {
     const product_id = req.params.product_id;
+    console.log('Searching for filters with product_id:', product_id); // Agregar log para el product_id recibido
     try {
-
+        const filter = await filterModel.getFilterByProductId(product_id);
+        if (filter) {
+            console.log('Filters found:', filter); // Agregar log para los filtros encontrados
+            res.status(200).json({ success: true, filter });
+        } else {
+            console.log('Filters not found for product_id:', product_id); // Agregar log para indicar que no se encontraron filtros
+            res.status(404).json({ success: false, message: 'Filters not found' });
+        }
     } catch (error) {
-
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+
 
 // Función para obtener las fechas disponibles para un producto específico
 const getAvailableDatesForProduct = async (req, res) => {
