@@ -23,16 +23,24 @@ const getLayers = async (req, res) => {
     }
 };
 
+
+
 // Función para crear un nuevo filtro
 const createFilter = async (req, res) => {
     try {
-        const newFilter = await filterModel.createFilter(req.body);
-        res.json(newFilter);
+        const filterData = req.body; // Suponiendo que los datos del filtro están en el cuerpo de la solicitud
+        const newFilter = await filterModel.createFilter(filterData);
+        res.status(201).json({ success: true, filter: newFilter });
     } catch (error) {
-        console.error('Error al crear un nuevo filtro:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al crear el filtro:', error);
+        res.status(500).json({ success: false, message: 'Error al crear el filtro' });
     }
 };
+
+module.exports = {
+    createFilter
+};
+
 
 // Función para obtener un filtro por id_filter
 const getFilterById = async (req, res) => {

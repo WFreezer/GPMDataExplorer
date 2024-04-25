@@ -184,21 +184,23 @@ export class FilterComponent implements OnInit {
   }
 
   createFilter(): void {
+// Verifica que todos los campos estén llenos
+if (!this.filter.product_id || !this.filter.date_from || !this.filter.date_to ||
+  !this.filter.longitud_min || !this.filter.longitud_max || !this.filter.latitud_min ||
+  !this.filter.latitud_max || !this.filter.variable_ids || !this.filter.layer_ids) {
+alert('Por favor, complete todos los campos para crear el filtro.');
+return;
+}
+    //Product_id 
+    this.filter.product_id=this.productId;
     // Asigna las fechas seleccionadas
     this.filter.date_from = this.filterService.getStartDate();
     this.filter.date_to = this.filterService.getEndDate();
-    console.log("createFilter())");
-    console.log("dateLoad().filter.date_from: "+ this.filter.date_from);
-    console.log("dateLoad().filter.date_to: "+ this.filter.date_to);
+    ;
     // Procesa las coordenadas de región ingresadas por el usuario
     const coordinates = this.regionCoordinates.split(',').map(coord => parseFloat(coord.trim()));
     console.log("Long_min22222: "+ this.filter.longitud_min);
      if (coordinates.length === 4 && !coordinates.some(isNaN)) {
-      const [longMin, latMin, longMax, latMax] = coordinates;
-      if (longMin < -180 || longMax > 180 || latMin < -90 || latMax > 90) {
-          this.regionCoordinatesError = 'Las coordenadas exceden los límites de la región.';
-          return; // Evita continuar con la creación del filtro
-      }
       this.filter.longitud_min = coordinates[0];
       this.filter.latitud_min = coordinates[1];
       this.filter.longitud_max = coordinates[2];
@@ -232,6 +234,18 @@ export class FilterComponent implements OnInit {
     console.log('Variable IDs:', this.filter.variable_ids);
     console.log('Layer IDs:', this.filter.layer_ids);
     console.log('Filtro:' + this.filter);
+
+    // Llama al servicio para crear el filtro
+    this.filterService.createFilter(this.filter).subscribe(
+      (response) => {
+        const filtroId = response.filter; // Obtiene solo el ID del filtro
+        console.log('ID del filtro creado:', filtroId);
+      },
+      (error) => {
+        console.error('Error al crear el filtro:', error);
+        // Maneja el error aquí, como mostrar un mensaje de error al usuario
+      }
+    );
   }
 
   

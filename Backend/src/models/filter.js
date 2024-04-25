@@ -18,8 +18,13 @@ const Filter = {
       throw new Error(`Error fetching layers: ${error.message}`);
     }
   },
+ // Función para crear un nuevo filtro en la base de datos
   createFilter: async (filterData) => {
-    // Implementa la lógica para crear un nuevo filtro
+  const { product_id, date_from, date_to, longitud_min, longitud_max, latitud_min, latitud_max, variable_ids, layer_ids } = filterData;
+  const query = 'INSERT INTO filter (product_id, date_from, date_to, longitud_min, longitud_max, latitud_min, latitud_max, variable_ids, layer_ids) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  const values = [product_id, date_from, date_to, longitud_min, longitud_max, latitud_min, latitud_max, variable_ids, layer_ids];
+  const result = await db.query(query, values);
+  return result.insertId; // Retorna el ID del nuevo filtro creado
   },
   getFilterById: async (id_filter) => {
     // Implementa la lógica para obtener un filtro por id_filter

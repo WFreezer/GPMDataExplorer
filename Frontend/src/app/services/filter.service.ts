@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Filter } from '../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,9 +51,8 @@ export class FilterService {
     return this.http.get<any>(`${this.apiUrl}/layers`);
   }
 
-  // Método para crear un nuevo filtro
-  createFilter(filterData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, filterData);
+  createFilter(filter: Filter): Observable<any> {
+    return this.http.post<any>(this.apiUrl, filter);
   }
 
   // Método para obtener un filtro por su ID
