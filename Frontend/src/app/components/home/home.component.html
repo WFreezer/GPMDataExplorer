@@ -1,23 +1,21 @@
-
 <div class="container">
-    <!-- <div class="header">
+  <!-- <div class="header">
       <button routerLink="">Iniciar Sesión</button>
       <button routerLink="">Registrarse</button>
     </div> -->
-    <div class="main-content">
-      <div class="welcome">
-        <h1>GpmDataExplorer</h1>
-      </div>
-      <div class="error-message" *ngIf="showErrorMessage">
-        Por favor, ingrese un nombre.
-      </div>
-      <hr>
-      <div class="input-box">
-        <label for="username">Nombre:  </label>
-        <input type="text" id="username" [(ngModel)]="username" />
-        <br><br>
-        <button (click)="comenzar()">Iniciar</button>
-      </div>
-    </div>    
+  <div class="main-content">
+    <div class="welcome">
+      <h1>GpmDataExplorer</h1>
+    </div>
+    <div class="error-message" *ngIf="showErrorMessage">
+      Por favor, ingrese un nombre.
+    </div>
+    <hr>
+    <div class="input-box">
+      <label for="username">Nombre: </label>
+      <input type="text" id="username" [(ngModel)]="username" />
+      <br><br>
+      <button (click)="comenzar()">Iniciar</button>
+    </div>
   </div>
-  
+</div>

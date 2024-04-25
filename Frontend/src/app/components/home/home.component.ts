@@ -15,7 +15,7 @@ export class HomeComponent {
   showErrorMessage: boolean = false;
   session: SessionModel | undefined;
 
-  constructor(private router: Router, private sessionService: SessionService) {}
+  constructor(private router: Router, private sessionService: SessionService) { }
 
   comenzar() {
     if (this.username.trim() === '') {
@@ -25,7 +25,7 @@ export class HomeComponent {
       this.sessionService.createSession(this.username).subscribe(
         response => {
           this.session = response; // Asignar la respuesta completa a la propiedad session
-         
+
           this.sessionService.setSessionId(response.session_id); // Utilizar response.session_id
           // Navegar a la página 'radiometerselection' con el ID de sesión como parámetro
           this.router.navigate(['/radiometerselection']);

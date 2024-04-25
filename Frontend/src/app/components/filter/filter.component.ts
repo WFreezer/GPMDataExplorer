@@ -16,7 +16,7 @@ export class FilterComponent implements OnInit {
   sessionId: string;
   radiometerName: string;
   satelliteName: string;
-  
+
   isDateRangeOpen: boolean = false;
   startDate: Date | null = null;
   endDate: Date | null = null;
@@ -53,7 +53,7 @@ export class FilterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private selectionService: SelectionService, 
+    private selectionService: SelectionService,
     private filterService: FilterService
   ) { }
 
@@ -65,26 +65,26 @@ export class FilterComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.productId = params['productId'];
     });
-  
+
     // Obtener el nombre del radiómetro seleccionado del servicio de selección
     this.radiometerName = this.selectionService.getRadiometerName();
     // Obtener el nombre del satélite seleccionado del servicio de selección
     this.satelliteName = this.selectionService.getSatelliteName();
-  
+
     // Cargar las fechas disponibles
     this.loadAvailableDates();
-  
+
     //Si se ha accedido a map, guarda las coordenadas del rectángulo
     this.rectangleCoordinates = this.filterService.getRectangleCoordinates();
-    
+
     if (this.rectangleCoordinates.length) {
       this.isRegionRangeOpen = true;
       this.regionCoordinates = this.rectangleCoordinates.join(', ');
     }
-    
-      
+
+
   }
-  
+
   toggleDateRange(): void {
     this.isDateRangeOpen = !this.isDateRangeOpen;
     this.isRegionRangeOpen = false;
@@ -102,7 +102,7 @@ export class FilterComponent implements OnInit {
     this.isSelectorLayersOpen = false;
   }
 
-  
+
   toggleSelectedVariables(): void {
     this.isSelectorVariablesOpen = !this.isSelectorVariablesOpen;
     this.isDateRangeOpen = false;
@@ -129,7 +129,7 @@ export class FilterComponent implements OnInit {
       (dates: any[]) => {
         this.availableStartDate = new Date(dates[0].start_date).toISOString().split('T')[0];
         this.availableEndDate = new Date(dates[0].end_date).toISOString().split('T')[0];
-    
+
       },
       (error) => {
         console.error('Error obteniendo las fechas disponibles:', error);
@@ -138,30 +138,30 @@ export class FilterComponent implements OnInit {
   }
 
   dateLoad(): void {
-    
+
     this.filterService.setStartDate(this.startDate);
     this.filterService.setEndDate(this.endDate);
     console.log("dateLoad()");
-    console.log("dateLoad().startDate: "+ this.startDate);
-    console.log("dateLoad().endDate: "+ this.endDate);
+    console.log("dateLoad().startDate: " + this.startDate);
+    console.log("dateLoad().endDate: " + this.endDate);
     // Cierra el rango de fechas
     this.toggleDateRange();
   }
-  
+
 
   goToMap(): void {
     this.router.navigate(['/map', this.productId]);
   }
 
- 
-  
+
+
   areVariablesSelected(): boolean {
     return Object.values(this.selectedVariables).some(value => value);
   }
-  
+
 
   loadVariables(): void {
-    
+
     this.filterService.getVariables().subscribe(
       (data: any[]) => {
         this.variables = data;
@@ -184,23 +184,23 @@ export class FilterComponent implements OnInit {
   }
 
   createFilter(): void {
-// Verifica que todos los campos estén llenos
-if (!this.filter.product_id || !this.filter.date_from || !this.filter.date_to ||
-  !this.filter.longitud_min || !this.filter.longitud_max || !this.filter.latitud_min ||
-  !this.filter.latitud_max || !this.filter.variable_ids || !this.filter.layer_ids) {
-alert('Por favor, complete todos los campos para crear el filtro.');
-return;
-}
+    // Verifica que todos los campos estén llenos
+    if (!this.filter.product_id || !this.filter.date_from || !this.filter.date_to ||
+      !this.filter.longitud_min || !this.filter.longitud_max || !this.filter.latitud_min ||
+      !this.filter.latitud_max || !this.filter.variable_ids || !this.filter.layer_ids) {
+      alert('Por favor, complete todos los campos para crear el filtro.');
+      return;
+    }
     //Product_id 
-    this.filter.product_id=this.productId;
+    this.filter.product_id = this.productId;
     // Asigna las fechas seleccionadas
     this.filter.date_from = this.filterService.getStartDate();
     this.filter.date_to = this.filterService.getEndDate();
     ;
     // Procesa las coordenadas de región ingresadas por el usuario
     const coordinates = this.regionCoordinates.split(',').map(coord => parseFloat(coord.trim()));
-    console.log("Long_min22222: "+ this.filter.longitud_min);
-     if (coordinates.length === 4 && !coordinates.some(isNaN)) {
+    console.log("Long_min22222: " + this.filter.longitud_min);
+    if (coordinates.length === 4 && !coordinates.some(isNaN)) {
       this.filter.longitud_min = coordinates[0];
       this.filter.latitud_min = coordinates[1];
       this.filter.longitud_max = coordinates[2];
@@ -210,18 +210,18 @@ return;
       this.regionCoordinatesError = 'Las coordenadas deben ser cuatro números separados por comas.';
     }
 
-     // Obtén los IDs de las variables seleccionadas y guárdalos en filter.variable_ids
-     const selectedVariableIds = Object.entries(this.selectedVariables)
-     .filter(([_, isSelected]) => isSelected)
-     .map(([variableId, _]) => variableId);
-   
-      this.filter.variable_ids = selectedVariableIds.join(',');
+    // Obtén los IDs de las variables seleccionadas y guárdalos en filter.variable_ids
+    const selectedVariableIds = Object.entries(this.selectedVariables)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([variableId, _]) => variableId);
 
-   // Obtén los IDs de las capas seleccionadas y guárdalos en filter.layer_ids
-   const selectedLayerIds = Object.entries(this.selectedLayers)
-   .filter(([_, isSelected]) => isSelected)
-   .map(([layerId, _]) => layerId);
- 
+    this.filter.variable_ids = selectedVariableIds.join(',');
+
+    // Obtén los IDs de las capas seleccionadas y guárdalos en filter.layer_ids
+    const selectedLayerIds = Object.entries(this.selectedLayers)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([layerId, _]) => layerId);
+
     this.filter.layer_ids = selectedLayerIds.join(',');
 
     // Log de verificación
@@ -248,5 +248,5 @@ return;
     );
   }
 
-  
+
 }

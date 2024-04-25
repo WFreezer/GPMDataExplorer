@@ -62,15 +62,9 @@ const getFilterById = async (req, res) => {
 const getFilterByProductId = async (req, res) => {
     const product_id = req.params.product_id;
     try {
-        const filter = await filterModel.getFilterByProductId(product_id);
-        if (!filter) {
-            res.status(404).json({ message: 'Filtro no encontrado' });
-            return;
-        }
-        res.json(filter);
+
     } catch (error) {
-        console.error('Error al obtener un filtro por product_id:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+
     }
 };
 

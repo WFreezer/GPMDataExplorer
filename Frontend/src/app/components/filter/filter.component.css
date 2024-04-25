@@ -1,84 +1,98 @@
-
-
- /* Estilos para el título */
- h1 {
+/* Estilos para el título */
+h1 {
   padding: 10px;
-  font-size: 24px; /* Tamaño de fuente más grande */
-  margin-bottom: 20px; /* Espacio inferior */
-  color: #333; /* Color del texto */
-  font-family: Arial, sans-serif; /* Fuente */
-  text-align: center; /* Centrado */
-  background-color: #f9f9f9; /* Color de fondo */
-  border-radius: 10px; /* Borde redondeado */
+  font-size: 24px;
+  /* Tamaño de fuente más grande */
+  margin-bottom: 20px;
+  /* Espacio inferior */
+  color: #333;
+  /* Color del texto */
+  font-family: Arial, sans-serif;
+  /* Fuente */
+  text-align: center;
+  /* Centrado */
+  background-color: #f9f9f9;
+  /* Color de fondo */
+  border-radius: 10px;
+  /* Borde redondeado */
 }
 
 /* Estilos para contenedores */
 .filter {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-  }
-  
-  /* Estilos para los inputs */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+/* Estilos para los inputs */
 input[type="checkbox"] {
-  margin-right: 5px; /* Reduce el espacio entre el checkbox y el label */
-  margin-bottom: 5px; /* Reduce el espacio entre cada par de checkbox y label */
+  margin-right: 5px;
+  /* Reduce el espacio entre el checkbox y el label */
+  margin-bottom: 5px;
+  /* Reduce el espacio entre cada par de checkbox y label */
 }
 
 /* Estilos para las etiquetas de checkbox */
 .filter label {
-  margin-bottom: 5px; /* Reduce el espacio entre cada par de checkbox y label */
+  margin-bottom: 5px;
+  /* Reduce el espacio entre cada par de checkbox y label */
 }
- input {
+
+input {
   width: auto;
-  margin:10px;
- }
-  /* Estilos para el texto de rango de fechas */
-.date-range-text {
-    font-weight: bold;
-    color: #333; /* Cambia el color del texto si lo deseas */
-  }
-  
-  /* Estilos para el botón de selección de fecha */
-  .filter button {
-    margin-left: 10px;
-    padding: 5px 5px;
-    background-color: #87e3c1; /* Cambia el color de fondo del botón */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: Arial, sans-serif; /* Cambia la fuente del botón */
-    font-size: 16px; /* Ajusta el tamaño de la fuente del botón */
- 
-  }
-  
-  .filter button:hover {
-    background-color: #8e4ebc; /* Cambia el color de fondo al pasar sobre el botón */
+  margin: 10px;
 }
-  
-  /* Estilos para el contenedor del rango de fechas */
-  .filter-container {
-    margin-top: 20px;
-  }
-  
-  /* Estilos para las etiquetas de fecha */
-  .filter-container label {
-    margin-right: 10px;
-  }
-  
-  /* Estilos para los campos de fecha */
-  .filter-container input[type="date"] {
-    margin:5px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  
-  .error-message {
-    color: red;
-  }
-  
+
+/* Estilos para el texto de rango de fechas */
+.date-range-text {
+  font-weight: bold;
+  color: #333;
+  /* Cambia el color del texto si lo deseas */
+}
+
+/* Estilos para el botón de selección de fecha */
+.filter button {
+  margin-left: 10px;
+  padding: 5px 5px;
+  background-color: #87e3c1;
+  /* Cambia el color de fondo del botón */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  /* Cambia la fuente del botón */
+  font-size: 16px;
+  /* Ajusta el tamaño de la fuente del botón */
+
+}
+
+.filter button:hover {
+  background-color: #8e4ebc;
+  /* Cambia el color de fondo al pasar sobre el botón */
+}
+
+/* Estilos para el contenedor del rango de fechas */
+.filter-container {
+  margin-top: 20px;
+}
+
+/* Estilos para las etiquetas de fecha */
+.filter-container label {
+  margin-right: 10px;
+}
+
+/* Estilos para los campos de fecha */
+.filter-container input[type="date"] {
+  margin: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+.error-message {
+  color: red;
+}
