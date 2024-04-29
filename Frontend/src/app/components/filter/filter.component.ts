@@ -184,13 +184,7 @@ export class FilterComponent implements OnInit {
   }
 
   createFilter(): void {
-    // Verifica que todos los campos estén llenos
-    if (!this.filter.product_id || !this.filter.date_from || !this.filter.date_to ||
-      !this.filter.longitud_min || !this.filter.longitud_max || !this.filter.latitud_min ||
-      !this.filter.latitud_max || !this.filter.variable_ids || !this.filter.layer_ids) {
-      alert('Por favor, complete todos los campos para crear el filtro.');
-      return;
-    }
+    
     //Product_id 
     this.filter.product_id = this.productId;
     // Asigna las fechas seleccionadas
@@ -235,6 +229,13 @@ export class FilterComponent implements OnInit {
     console.log('Layer IDs:', this.filter.layer_ids);
     console.log('Filtro:' + this.filter);
 
+    // Verifica que todos los campos estén llenos
+    if (!this.filter.product_id || !this.filter.date_from || !this.filter.date_to ||
+      !this.filter.longitud_min || !this.filter.longitud_max || !this.filter.latitud_min ||
+      !this.filter.latitud_max || !this.filter.variable_ids || !this.filter.layer_ids) {
+      alert('Por favor, complete todos los campos para crear el filtro.');
+      return;
+    }
     // Llama al servicio para crear el filtro
     this.filterService.createFilter(this.filter).subscribe(
       (response) => {
