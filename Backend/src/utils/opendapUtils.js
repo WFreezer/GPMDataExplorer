@@ -83,25 +83,43 @@ const generarFechasURL = (dateFrom, dateTo) => {
   return fechasURL;
 };
 
-// Función para obtener el día del año para una fecha dada
 const obtenerDiaDelAño = (fecha) => {
   const year = fecha.getFullYear();
   const mes = fecha.getMonth();
   const dia = fecha.getDate();
 
-  // Crear una fecha para el 1 de enero del año actual
-  const inicioDeAño = new Date(year, 0, 1);
-  
-  // Calcular la diferencia en milisegundos entre la fecha dada y el inicio del año
-  const diferenciaEnMilisegundos = fecha - inicioDeAño;
-  
-  // Convertir la diferencia en días redondeando hacia abajo
-  const diaDelAño = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24)) + 1;
+  // Función para verificar si el año es bisiesto
+  const esBisiesto = (year) => {
+    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+  };
 
-  
+  // Número de días en cada mes
+  const diasPorMes = [
+    31, // Enero
+    esBisiesto(year) ? 29 : 28, // Febrero (ajustado para años bisiestos)
+    31, // Marzo
+    30, // Abril
+    31, // Mayo
+    30, // Junio
+    31, // Julio
+    31, // Agosto
+    30, // Septiembre
+    31, // Octubre
+    30, // Noviembre
+    31  // Diciembre
+  ];
+
+  // Calcular el día del año sumando los días de los meses anteriores
+  let diaDelAño = 0;
+  for (let i = 0; i < mes; i++) {
+    diaDelAño += diasPorMes[i];
+  }
+  diaDelAño += dia;
+
   // Añadir ceros a la izquierda para obtener tres dígitos
   return diaDelAño.toString().padStart(3, '0');
 };
+
 
 const determinarSufijoVersion = (fechaHoy, satelliteShortname) => {
     // Definir fechas límite comunes para el sufijo de versión V07A, V07B y V07C
