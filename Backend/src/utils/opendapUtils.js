@@ -86,19 +86,18 @@ const generarFechasURL = (dateFrom, dateTo) => {
 // Función para obtener el día del año para una fecha dada
 const obtenerDiaDelAño = (fecha) => {
   const year = fecha.getFullYear();
-  const inicioDeAño = new Date(year, 0, 0);
-  const diff = fecha - inicioDeAño;
-  const unDia = 1000 * 60 * 60 * 24;
-  const diaDelAño = Math.floor(diff / unDia);
+  const mes = fecha.getMonth();
+  const dia = fecha.getDate();
 
-  // Verificar si el año actual es bisiesto
-  const esBisiesto = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  // Crear una fecha para el 1 de enero del año actual
+  const inicioDeAño = new Date(year, 0, 1);
   
-  // Si el año es bisiesto y el día es mayor que 58 (29 de febrero),
-  // se suma 1 al día del año para compensar el día extra de febrero
-  if (esBisiesto && diaDelAño >= 58) {
-    return (diaDelAño + 1).toString().padStart(3, '0');
-  }
+  // Calcular la diferencia en milisegundos entre la fecha dada y el inicio del año
+  const diferenciaEnMilisegundos = fecha - inicioDeAño;
+  
+  // Convertir la diferencia en días redondeando hacia abajo
+  const diaDelAño = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24)) + 1;
+
   
   // Añadir ceros a la izquierda para obtener tres dígitos
   return diaDelAño.toString().padStart(3, '0');

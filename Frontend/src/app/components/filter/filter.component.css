@@ -96,3 +96,20 @@ input {
 .error-message {
   color: red;
 }
+
+/* Estilos para el último botón */
+.last-button {
+
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+ 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.last-button:hover {
+  background-color: #8e4ebc;
+}
