@@ -5,7 +5,8 @@
   <div class="filter">
     <!-- Botón para mostrar u ocultar el rango de fechas -->
     <div>
-      <span class="date-range-text">Date Range:  {{ startDate ? startDate : availableStartDate }} to {{ endDate ? endDate : availableEndDate }}</span>
+      <span class="date-range-text">Date Range: {{ startDate ? startDate : availableStartDate }} to {{ endDate ? endDate
+        : availableEndDate }}</span>
 
       <button (click)="toggleDateRange()">Select Date</button>
     </div>
@@ -66,19 +67,21 @@
     <button (click)="toggleSelectedVariables()">Variables</button>
     <div *ngIf="isSelectorVariablesOpen" class="filter">
       <div *ngFor="let variable of variables">
-        <input type="checkbox" id="{{ variable.id }}" [(ngModel)]="selectedVariables[variable.id]">
-        <label for="{{ variable.id }}">{{ variable.value }}</label>
+        <input type="checkbox" id="{{ variable.id }}" [(ngModel)]="selectedVariables[variable.id]" [title]="variable.description">
+        <label for="{{ variable.id }}" [title]="variable.description">{{ variable.value }}</label>
       </div>
     </div>
   </div>
 
   <!-- Contenedor para Layer -->
   <div class="filter">
-    <label class="date-range-text">Select Layers:<span style="color: red;"> Please select consecutive layers.</span></label>
+    <label class="date-range-text">Select Layers:<span style="color: red;"> Please select consecutive
+        layers.</span></label>
     <button (click)="toggleSelectedLayers()">Layers</button>
     <div *ngIf="isSelectorLayersOpen" class="filter">
       <div *ngFor="let layer of layers">
-        <input type="checkbox" id="{{ layer.id }}" [(ngModel)]="selectedLayers[layer.id]" (change)="toggleLayerSelection(layer.id)">
+        <input type="checkbox" id="{{ layer.id }}" [(ngModel)]="selectedLayers[layer.id]"
+          (change)="toggleLayerSelection(layer.id)">
         <label for="{{ layer.id }}">{{ layer.value }}</label>
       </div>
 

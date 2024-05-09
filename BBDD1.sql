@@ -37,7 +37,8 @@ CREATE TABLE product (
 -- Crear tabla para seleccionar variables
 CREATE TABLE variables_select (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    value VARCHAR(50) NOT NULL
+    value VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL
 );
 
 -- Crear tabla para seleccionar layer
