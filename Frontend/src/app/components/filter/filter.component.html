@@ -5,7 +5,7 @@
   <div class="filter">
     <!-- Botón para mostrar u ocultar el rango de fechas -->
     <div>
-      <span class="date-range-text">Date Range: {{ availableStartDate }} to {{ availableEndDate }}</span>
+      <span class="date-range-text">Date Range:  {{ startDate ? startDate : availableStartDate }} to {{ endDate ? endDate : availableEndDate }}</span>
 
       <button (click)="toggleDateRange()">Select Date</button>
     </div>
@@ -30,7 +30,7 @@
   <div class="filter">
     <!-- Botón para mostrar u ocultar el rango de fechas -->
     <div>
-      <span class="date-range-text">Region: -180, -70, 180, 70</span>
+      <span class="date-range-text">Region: {{ regionCoordinates ? regionCoordinates : '-180, -70, 180, 70' }}</span>
       <button (click)="toggleRegionRange()">Select Region</button>
       <button (click)="goToMap()">Map</button>
       <div *ngIf="regionCoordinatesError" class="error-message">
@@ -41,21 +41,21 @@
     <!-- Contenedor para el rango de regiones -->
     <div *ngIf="isRegionRangeOpen" class="filter">
 
-        <!-- Botones para seleccionar regiones predefinidas -->
-        <div class="region-buttons">
-          <button (click)="selectContinent('North America')">North America</button>
-          <button (click)="selectContinent('South America')">South America</button>
-          <button (click)="selectContinent('Europe')">Europe</button>
-          <button (click)="selectContinent('Africa')">Africa</button>
-          <button (click)="selectContinent('Asia')">Asia</button>
-          <button (click)="selectContinent('Australia')">Australia</button>
-         </div>
-   
+      <!-- Botones para seleccionar regiones predefinidas -->
+      <div class="region-buttons">
+        <button (click)="selectContinent('North America')">North America</button>
+        <button (click)="selectContinent('South America')">South America</button>
+        <button (click)="selectContinent('Europe')">Europe</button>
+        <button (click)="selectContinent('Africa')">Africa</button>
+        <button (click)="selectContinent('Asia')">Asia</button>
+        <button (click)="selectContinent('Australia')">Australia</button>
+      </div>
+
       <!-- Input para ingresar las coordenadas -->
       <label for="regionCoordinates">Enter Region Coordinates : </label>
       <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates" disabled>
-    
-    
+
+
     </div>
   </div>
 
@@ -74,13 +74,14 @@
 
   <!-- Contenedor para Layer -->
   <div class="filter">
-    <label class="date-range-text">Select Layers:</label>
+    <label class="date-range-text">Select Layers:<span style="color: red;"> Please select consecutive layers.</span></label>
     <button (click)="toggleSelectedLayers()">Layers</button>
     <div *ngIf="isSelectorLayersOpen" class="filter">
       <div *ngFor="let layer of layers">
-        <input type="checkbox" id="{{ layer.id }}" [(ngModel)]="selectedLayers[layer.id]">
+        <input type="checkbox" id="{{ layer.id }}" [(ngModel)]="selectedLayers[layer.id]" (change)="toggleLayerSelection(layer.id)">
         <label for="{{ layer.id }}">{{ layer.value }}</label>
       </div>
+
     </div>
   </div>
 

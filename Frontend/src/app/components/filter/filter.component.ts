@@ -180,7 +180,7 @@ export class FilterComponent implements OnInit {
       }
     );
   }
-  
+
 
   //Regiones por defecto
   selectContinent(region: string): void {
@@ -188,30 +188,60 @@ export class FilterComponent implements OnInit {
       case 'North America':
         this.regionCoordinates = '-168.0, 14, -22.0, 70.0'; // Ejemplo de coordenadas para América del Norte
         break;
-        case 'South America':
-          this.regionCoordinates = '-117.0, -56.0, -34.0, 12.0';
-          break;
-        case 'Europe':
-          this.regionCoordinates = '-29.0, 35.0, 42.0, 71.0';
-          break;
-        case 'Africa':
-          this.regionCoordinates = '-25.0, -35.0, 53.0, 40.0';
-          break;
-        case 'Asia':
-          this.regionCoordinates = '26.0, -12.0, 179.0, 70.0';
-          break;
-        case 'Australia':
-          this.regionCoordinates = '111.0, -56.0, 179.0, -10.0';
-          break;
-        default:
-          this.regionCoordinates = ''; // Si la región no está definida, limpia las coordenadas
-          break;
+      case 'South America':
+        this.regionCoordinates = '-117.0, -56.0, -34.0, 12.0';
+        break;
+      case 'Europe':
+        this.regionCoordinates = '-29.0, 35.0, 42.0, 71.0';
+        break;
+      case 'Africa':
+        this.regionCoordinates = '-25.0, -35.0, 53.0, 40.0';
+        break;
+      case 'Asia':
+        this.regionCoordinates = '26.0, -12.0, 179.0, 70.0';
+        break;
+      case 'Australia':
+        this.regionCoordinates = '111.0, -56.0, 179.0, -10.0';
+        break;
+      default:
+        this.regionCoordinates = ''; // Si la región no está definida, limpia las coordenadas
+        break;
+    }
+  }
+
+  toggleLayerSelection(layerId: number): void {
+    const index = this.layers.findIndex(layer => layer.id === layerId);
+    const selected = this.selectedLayers[layerId];
+  
+    // Obtiene los IDs de los checkboxes marcados
+    const selectedIds: number[] = [];
+    for (const id in this.selectedLayers) {
+      if (this.selectedLayers[id]) {
+        selectedIds.push(+id); // Convierte la clave de string a number
       }
     }
- 
   
-  createFilter(): void {
+  
+    // Si hay al menos dos checkboxes marcados, selecciona los checkboxes entre ellos
+  
+      // Determina el ID menor y mayor seleccionado
+      const minId = selectedIds[0];
+      const maxId = selectedIds[selectedIds.length - 1];
+  
+      // Marca los checkboxes entre el ID menor y el ID mayor
+      for (let id = minId + 1; id < maxId; id++) {
+        this.selectedLayers[id] = true;
+      }
     
+  
+    console.log('IDs de los checkboxes marcados:', selectedIds);
+  }
+  
+  
+
+
+  createFilter(): void {
+
     //Product_id 
     this.filter.product_id = this.productId;
     // Asigna las fechas seleccionadas
