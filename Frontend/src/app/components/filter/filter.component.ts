@@ -141,9 +141,6 @@ export class FilterComponent implements OnInit {
 
     this.filterService.setStartDate(this.startDate);
     this.filterService.setEndDate(this.endDate);
-    console.log("dateLoad()");
-    console.log("dateLoad().startDate: " + this.startDate);
-    console.log("dateLoad().endDate: " + this.endDate);
     // Cierra el rango de fechas
     this.toggleDateRange();
   }
@@ -176,13 +173,43 @@ export class FilterComponent implements OnInit {
     this.filterService.getLayers().subscribe(
       (data: any[]) => {
         this.layers = data;
+        console.log('Layers:', this.layers); // Agrega este console.log para verificar los datos de las capas
       },
       (error) => {
         console.error('Error obteniendo las capas:', error);
       }
     );
   }
+  
 
+  //Regiones por defecto
+  selectContinent(region: string): void {
+    switch (region) {
+      case 'North America':
+        this.regionCoordinates = '-168.0, 14, -22.0, 70.0'; // Ejemplo de coordenadas para América del Norte
+        break;
+        case 'South America':
+          this.regionCoordinates = '-117.0, -56.0, -34.0, 12.0';
+          break;
+        case 'Europe':
+          this.regionCoordinates = '-29.0, 35.0, 42.0, 71.0';
+          break;
+        case 'Africa':
+          this.regionCoordinates = '-25.0, -35.0, 53.0, 40.0';
+          break;
+        case 'Asia':
+          this.regionCoordinates = '26.0, -12.0, 179.0, 70.0';
+          break;
+        case 'Australia':
+          this.regionCoordinates = '111.0, -56.0, 179.0, -10.0';
+          break;
+        default:
+          this.regionCoordinates = ''; // Si la región no está definida, limpia las coordenadas
+          break;
+      }
+    }
+ 
+  
   createFilter(): void {
     
     //Product_id 
@@ -193,7 +220,6 @@ export class FilterComponent implements OnInit {
     ;
     // Procesa las coordenadas de región ingresadas por el usuario
     const coordinates = this.regionCoordinates.split(',').map(coord => parseFloat(coord.trim()));
-    console.log("Long_min22222: " + this.filter.longitud_min);
     if (coordinates.length === 4 && !coordinates.some(isNaN)) {
       this.filter.longitud_min = coordinates[0];
       this.filter.latitud_min = coordinates[1];

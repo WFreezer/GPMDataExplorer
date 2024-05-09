@@ -40,11 +40,22 @@
 
     <!-- Contenedor para el rango de regiones -->
     <div *ngIf="isRegionRangeOpen" class="filter">
+
+        <!-- Botones para seleccionar regiones predefinidas -->
+        <div class="region-buttons">
+          <button (click)="selectContinent('North America')">North America</button>
+          <button (click)="selectContinent('South America')">South America</button>
+          <button (click)="selectContinent('Europe')">Europe</button>
+          <button (click)="selectContinent('Africa')">Africa</button>
+          <button (click)="selectContinent('Asia')">Asia</button>
+          <button (click)="selectContinent('Australia')">Australia</button>
+         </div>
+   
       <!-- Input para ingresar las coordenadas -->
       <label for="regionCoordinates">Enter Region Coordinates : </label>
       <input type="text" id="regionCoordinates" name="regionCoordinates" [(ngModel)]="regionCoordinates" disabled>
-      <!-- Contenedor para el mensaje de error de las coordenadas -->
-
+    
+    
     </div>
   </div>
 
