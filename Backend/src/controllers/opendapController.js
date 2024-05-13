@@ -1,8 +1,9 @@
 // opendapController.js
 
 // Importar utilidades de OpenDAP
-const { generarURLBase, obtenerNombres, generarFechasURL,determinarSufijoVersion, leerDatosDesdeExcel } = require('../utils/opendapUtils');
+const { generarURLBase, obtenerNombres, generarFechasURL, determinarSufijoVersion, obtenerValoresCapa } = require('../utils/opendapUtils');
 const Filter = require('../models/filter');
+const { calcularNlon, calcularNlat, calcularNlay } = require('../utils/excelUtils');
 
 
 
@@ -14,15 +15,22 @@ const generarURL = async (req, res) => {
     // Consultar filtro utilizando id_filter
     const filter = await Filter.getFilterById(id_filter);
  
-    // Extraer product_id del filtro
-    const { product_id } = filter;
-
-    // Obtener las fechas de inicio y fin del filtro
-    const { date_from, date_to } = filter;
+    // Extraer datos de la tabla filtro
+    const { product_id,date_from, date_to, layer_ids,longitud_max,longitud_min,latitud_max,latitud_min} = filter;
 
     // Generar las fechas URL entre date_from y date_to
     const fechasURL = await generarFechasURL(date_from, date_to);
 
+    // Obtener los valores de capa correspondientes a los IDs almacenados en layer_ids
+    const layerValues = await obtenerValoresCapa(layer_ids);
+
+    // Calcular valores de coordenadas
+    const nlon = await calcularNlon(longitud_min, longitud_max);
+    console.log("opendapController.nlon: "+ nlon);
+    const nlat = await calcularNlat(latitud_min, latitud_max);
+    console.log("opendapController.nlat: "+ nlat);
+    const nlay = await calcularNlay(layerValues);
+    console.log("opendapController.nlay "+ nlay);
     // Obtener el URL base del satélite
     const urlBase = await generarURLBase(product_id);
 
@@ -41,7 +49,12 @@ const generarURL = async (req, res) => {
       const versionSuffix = determinarSufijoVersion(year + month + day, satelliteShortname);
 
       // Construir la URL completa con la fecha añadida
-      return `${urlBase}/${year}/${month}/3A-DAY.${satelliteName}.${radiometerName}.GRID2021R1.${year}${month}${day}-S000000-E235959.${dayOfYear}.${versionSuffix}.HDF5.ascii?`;
+      const baseUrl = `${urlBase}/${year}/${month}/3A-DAY.${satelliteName}.${radiometerName}.GRID2021R1.${year}${month}${day}-S000000-E235959.${dayOfYear}.${versionSuffix}.HDF5.ascii`;
+
+       // Construir la cadena de datos adicionales
+       const datos = `latentHeating${nlay}${nlon}${nlat},fractionQuality2${nlon}${nlat},lat_bnds${nlat}${nlay},fractionQuality1${nlon}${nlat},iceWaterPath${nlon}${nlat},surfacePrecipitation${nlon}${nlat},frozenPrecipitation${nlon}${nlat},fractionQuality0${nlon}${nlat},npixTotal${nlon}${nlat},cloudWaterPath${nlon}${nlat},npixPrecipitation${nlon}${nlat},snow${nlay}${nlon}${nlat},rainWater${nlay}${nlon}${nlat},cloudWater${nlay}${nlon}${nlat},surfaceTypeIndex${nlon}${nlat},fractionQuality3${nlon}${nlat},rainWaterPath${nlon}${nlat},convectivePrecipitation${nlon}${nlat},lon_bnds${nlon}${nlay},graupel${nlay}${nlon}${nlat},layer_bnds${nlay}[0:1],layer${nlay},lon${nlon},lat${nlat},latv,lonv,layerv`;
+      // Construir la URL completa con la fecha añadida
+      return `${baseUrl}?${datos}`;
     });
 
     // Enviar respuesta con la URL generada

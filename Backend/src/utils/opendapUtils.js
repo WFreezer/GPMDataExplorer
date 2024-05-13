@@ -164,7 +164,30 @@ const determinarSufijoVersion = (fechaHoy, satelliteShortname) => {
     }
   };
 
+ // Función para obtener los valores de capa correspondientes a los IDs dados
+const obtenerValoresCapa = async (layerIds) => {
+  try {
+    // Convertir la cadena de IDs en un arreglo si no lo está
+    const layerIdsArray = Array.isArray(layerIds) ? layerIds : layerIds.split(',').map(id => parseInt(id.trim(), 10)); // Convertir a números
+
+    console.log('layerIdsArray:', layerIdsArray);
+
+    // Obtener todos los datos de la tabla layer_values llamando a la función
+    const layers = await Filter.getLayers();
+
+    // Filtrar los valores correspondientes a los IDs de capa dados
+    const layerValues = layers
+      .filter(layer => layerIdsArray.includes(parseInt(layer.id))) // Convertir a número
+      .map(layer => layer.value); // Extraer solo los valores
+
+    console.log('layerValues:', layerValues);
+
+    return layerValues;
+  } catch (error) {
+    throw new Error('Error al obtener los valores de capa:', error);
+  }
+};
 
 
-module.exports = { generarURLBase, obtenerNombres, generarFechasURL, determinarSufijoVersion };
+module.exports = { generarURLBase, obtenerNombres, generarFechasURL, determinarSufijoVersion,obtenerValoresCapa };
 
