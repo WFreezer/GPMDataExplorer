@@ -296,11 +296,11 @@ export class FilterComponent implements OnInit {
     this.filterService.createFilter(this.filter).subscribe(
       (response) => {
         const filtroId = response.filter; // Obtiene solo el ID del filtro
-        console.log('ID del filtro creado:', filtroId);
+         // Navega al componente data-download y pasa el ID del filtro como parámetro de ruta
+    this.router.navigate(['/data-download', filtroId]);
       },
       (error) => {
         console.error('Error al crear el filtro:', error);
-        // Maneja el error aquí, como mostrar un mensaje de error al usuario
       }
     );
   }

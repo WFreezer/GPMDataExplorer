@@ -1,0 +1,42 @@
+h2 {
+    padding: 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+  }
+  
+.container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+
+  /* Estilos para la lista de URLs */
+.url-list {
+    list-style: none; /* Elimina los puntos de listado */
+    padding: 0; /* Elimina el relleno predeterminado */
+  }
+  
+  /* Estilos para cada enlace */
+.truncated-url {
+    display: block;
+    padding: 10px 0; /* Ajusta el relleno según sea necesario */
+    border-bottom: 1px solid #ccc; /* Agrega una línea horizontal */
+    text-decoration: none; /* Elimina el subrayado predeterminado */
+    color: #333; /* Cambia el color del texto si lo deseas */
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden; /* Oculta el texto que se desborda */
+    text-overflow: ellipsis; /* Muestra "..." cuando el texto se desborda */
+  }
+  
+  /* Estilos de hover */
+  .truncated-url:hover {
+    background-color: #87e3c1; /* Cambia el color de fondo al pasar el mouse */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  }

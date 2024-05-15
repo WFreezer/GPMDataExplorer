@@ -1,0 +1,9 @@
+<h2>Generated URLs</h2>
+<div class="container">
+  <p>The generated URLs correspond to the days selected in the filters:</p>
+  <ul class="url-list">
+    <li *ngFor="let url of urls">
+      <a [href]="url" target="_blank" class="truncated-url">{{ truncateUrl(url) }}</a>
+    </li>
+  </ul>
+</div>
