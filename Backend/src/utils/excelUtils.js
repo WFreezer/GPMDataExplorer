@@ -98,13 +98,13 @@ async function calcularNlay(layer1) {
                 nlay1 = layerv;
                 nlay2 = layerv;
             }
-            if (layer1.length == 2 && layer1[0] == layer) {
+            if (layer1.length >= 2 && layer1[0] == layer) {
                 console.log("dentro2  " + layer1[0] +"  "+ layer);
                 console.log(layerv);
                 nlay1 = layerv;
             }
 
-            if (layer1.length == 2 && layer1[1] == layer) {
+            if (layer1.length >= 2 && layer1[layer1.length - 1] == layer) {
                 console.log("dentro3"+ layer1[1] +"  "+  layer);
                 console.log(layerv);
                 nlay2 = layerv;
