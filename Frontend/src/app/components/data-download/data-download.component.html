@@ -6,4 +6,8 @@
       <a [href]="url" target="_blank" class="truncated-url">{{ truncateUrl(url) }}</a>
     </li>
   </ul>
+  <p>To access the URLs, registration is required. <a href="https://urs.earthdata.nasa.gov/" target="_blank">Register here</a>.</p>
+  <div class="button-container">
+    <button class="styled-button" type="button" (click)="navigateToRadiometerSelection()">Select Radiometer</button>
+  </div>
 </div>

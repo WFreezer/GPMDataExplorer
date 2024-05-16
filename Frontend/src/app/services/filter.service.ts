@@ -56,7 +56,7 @@ export class FilterService {
   }
 
   // Método para obtener un filtro por su ID
-  getFilterById(id: number): Observable<any> {
+  getFilterById(id: number): Observable<Filter> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 

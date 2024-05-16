@@ -40,3 +40,27 @@ h2 {
     background-color: #87e3c1; /* Cambia el color de fondo al pasar el mouse */
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
   }
+
+  .styled-button {
+ 
+    background-color: #4CAF50; /* color de fondo */
+  border: none;
+  color: white; /* color del texto */
+  padding: 10px 20px; /* relleno */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px; /* bordes redondeados */
+  }
+  
+  .styled-button:hover {
+    background-color: #8e4ebc;
+  }
+  .button-container {
+    text-align: center; /* Centrar los botones horizontalmente */
+    margin-top: 20px; /* Espacio en la parte superior para separarlos de los elementos anteriores */
+  }
+  
