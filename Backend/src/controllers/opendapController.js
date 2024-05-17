@@ -26,17 +26,17 @@ const generarURL = async (req, res) => {
 
     // Calcular valores de coordenadas
     const nlon = await calcularNlon(longitud_min, longitud_max);
-    console.log("opendapController.nlon: "+ nlon);
     const nlat = await calcularNlat(latitud_min, latitud_max);
-    console.log("opendapController.nlat: "+ nlat);
     const nlay = await calcularNlay(layerValues);
-    console.log("opendapController.nlay "+ nlay);
     // Obtener el URL base del satélite
     const urlBase = await generarURLBase(product_id);
 
     // Obtener el nombre del radiómetro y del satélite
     const { radiometerName, satelliteName, satelliteShortname } = await obtenerNombres(product_id);
-
+    const esCLI = satelliteShortname.endsWith('CLIM.07');
+    const esGPMGMI= satelliteShortname.endsWith('GPMGMI_DAY_CLIM.07') || satelliteShortname.endsWith('GPMGMI_DAY.07');
+    console.log("ES GPM?" + esGPMGMI);
+    console.log("Es CLI?" + esCLI);
     // Generar las URLs para cada fecha y almacenarlas en una lista
     const urlsCompletas = fechasURL.map(fecha => {
       // Obtener el año, mes y día de la fecha actual
@@ -49,11 +49,19 @@ const generarURL = async (req, res) => {
       const versionSuffix = determinarSufijoVersion(year + month + day, satelliteShortname);
 
       // Construir la URL completa con la fecha añadida
-      const baseUrl = `${urlBase}/${year}/${month}/3A-DAY.${satelliteName}.${radiometerName}.GRID2021R1.${year}${month}${day}-S000000-E235959.${dayOfYear}.${versionSuffix}.HDF5.ascii`;
+      let baseUrl = `${urlBase}/${year}/${month}/3A-DAY.${satelliteName}.${radiometerName}.GRID2021R1.${year}${month}${day}-S000000-E235959.${dayOfYear}.${versionSuffix}.HDF5.ascii`;
+      if(esCLI){
+        console.log("Entra?");
+       baseUrl = `${urlBase}/${year}/${month}/3A-CLIM-DAY.${satelliteName}.${radiometerName}.GRID2021R1.${year}${month}${day}-S000000-E235959.${dayOfYear}.${versionSuffix}.HDF5.ascii`;
+      }
 
-       // Construir la cadena de datos adicionales
-       const datos = `latentHeating${nlay}${nlon}${nlat},fractionQuality2${nlon}${nlat},lat_bnds${nlat}[0:1],fractionQuality1${nlon}${nlat},iceWaterPath${nlon}${nlat},surfacePrecipitation${nlon}${nlat},frozenPrecipitation${nlon}${nlat},fractionQuality0${nlon}${nlat},npixTotal${nlon}${nlat},cloudWaterPath${nlon}${nlat},npixPrecipitation${nlon}${nlat},snow${nlay}${nlon}${nlat},rainWater${nlay}${nlon}${nlat},cloudWater${nlay}${nlon}${nlat},surfaceTypeIndex${nlon}${nlat},fractionQuality3${nlon}${nlat},rainWaterPath${nlon}${nlat},convectivePrecipitation${nlon}${nlat},lon_bnds${nlon}[0:1],graupel${nlay}${nlon}${nlat},layer_bnds${nlay}[0:1],layer${nlay},lon${nlon},lat${nlat},latv,lonv,layerv`;
-      // Construir la URL completa con la fecha añadida
+       // Construir la cadena de datos adicionales pero para GPMGMI es distinta
+       let datos = `latentHeating${nlay}${nlon}${nlat},fractionQuality2${nlon}${nlat},lat_bnds${nlat}[0:1],fractionQuality1${nlon}${nlat},iceWaterPath${nlon}${nlat},surfacePrecipitation${nlon}${nlat},frozenPrecipitation${nlon}${nlat},fractionQuality0${nlon}${nlat},npixTotal${nlon}${nlat},cloudWaterPath${nlon}${nlat},npixPrecipitation${nlon}${nlat},snow${nlay}${nlon}${nlat},rainWater${nlay}${nlon}${nlat},cloudWater${nlay}${nlon}${nlat},surfaceTypeIndex${nlon}${nlat},fractionQuality3${nlon}${nlat},rainWaterPath${nlon}${nlat},convectivePrecipitation${nlon}${nlat},lon_bnds${nlon}[0:1],graupel${nlay}${nlon}${nlat},layer_bnds${nlay}[0:1],layer${nlay},lon${nlon},lat${nlat},latv,lonv,layerv`;
+       if(esGPMGMI){
+        console.log("ES GPM?" + esGPMGMI);
+        datos = `latentHeating${nlay}${nlon}${nlat},fractionQuality2${nlon}${nlat},lat_bnds${nlat}[0:1],fractionQuality1${nlon}${nlat},iceWaterPath${nlon}${nlat},surfacePrecipitation${nlon}${nlat},frozenPrecipitation${nlon}${nlat},fractionQuality0${nlon}${nlat},npixTotal${nlon}${nlat},cloudWaterPath${nlon}${nlat},npixPrecipitation${nlon}${nlat},snow${nlay}${nlon}${nlat},rainWater${nlay}${nlon}${nlat},cloudWater${nlay}${nlon}${nlat},surfaceTypeIndex${nlon}${nlat},fractionQuality3${nlon}${nlat},rainWaterPath${nlon}${nlat},convectivePrecipitation${nlon}${nlat},lon_bnds${nlon}[0:1],graupel${nlay}${nlon}${nlat},layer_bnds${nlay}[0:1],layer${nlay},lon,lat,latv,lonv,layerv`;
+       }
+       // Construir la URL completa con la fecha añadida
       return `${baseUrl}?${datos}`;
     });
 

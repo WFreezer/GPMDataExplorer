@@ -128,19 +128,23 @@ const determinarSufijoVersion = (fechaHoy, satelliteShortname) => {
     const fechaLimiteV07CGPM = '20230729';
     const fechaLimiteV07A_else = '20230630';
     const fechaLimiteV07B_else = '20230831';
-  
+    console.log(satelliteShortname);
     // Comparar si el shortname termina en "DAY_CLIM.07"
     if (satelliteShortname.endsWith('DAY_CLIM.07')) {
-  
+  console.log("Dentro de if");
       // Verificar si el shortname termina en "GPMGMI_DAY_CLIM.07"
-      if (satelliteShortname.endsWith('GPMGMI_DAY_CLIM.07')) {
+      if (satelliteShortname.endsWith('GPMGMI_DAY_CLIM.07')  ) {
         if (fechaHoy <= fechaLimiteV07A) {
+          console.log("Aqui1");
           return 'V07A';
         } else if (fechaHoy <= fechaLimiteV07B) {
+          console.log("Aqui2");
           return 'V07B';
         } else if (fechaHoy <= fechaLimiteV07CGPM) {
+          console.log("Aqui3");
           return 'V07C';
         } else {
+          console.log("Aqui4");
           return 'V07D';
         }
       } else {
@@ -153,7 +157,21 @@ const determinarSufijoVersion = (fechaHoy, satelliteShortname) => {
         }
       }
     } else {
-     
+      if (satelliteShortname.endsWith('GPMGMI_DAY.07')  ) {
+        if (fechaHoy <= fechaLimiteV07A) {
+          console.log("Aqui1");
+          return 'V07A';
+        } else if (fechaHoy <= fechaLimiteV07B) {
+          console.log("Aqui2");
+          return 'V07B';
+        } else if (fechaHoy <= fechaLimiteV07CGPM) {
+          console.log("Aqui3");
+          return 'V07C';
+        } else {
+          console.log("Aqui4");
+          return 'V07D';
+        }
+      } else{
       if (fechaHoy <= fechaLimiteV07A_else) {
         return 'V07A';
       } else if (fechaHoy <= fechaLimiteV07B_else) {
@@ -161,6 +179,7 @@ const determinarSufijoVersion = (fechaHoy, satelliteShortname) => {
       } else {
         return 'V07C';
       }
+    }
     }
   };
 
@@ -170,8 +189,6 @@ const obtenerValoresCapa = async (layerIds) => {
     // Convertir la cadena de IDs en un arreglo si no lo está
     const layerIdsArray = Array.isArray(layerIds) ? layerIds : layerIds.split(',').map(id => parseInt(id.trim(), 10)); // Convertir a números
 
-    console.log('layerIdsArray:', layerIdsArray);
-
     // Obtener todos los datos de la tabla layer_values llamando a la función
     const layers = await Filter.getLayers();
 
@@ -179,8 +196,6 @@ const obtenerValoresCapa = async (layerIds) => {
     const layerValues = layers
       .filter(layer => layerIdsArray.includes(parseInt(layer.id))) // Convertir a número
       .map(layer => layer.value); // Extraer solo los valores
-
-    console.log('layerValues:', layerValues);
 
     return layerValues;
   } catch (error) {

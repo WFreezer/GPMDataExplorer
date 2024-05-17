@@ -82,8 +82,6 @@ async function calcularNlay(layer1) {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.readFile(rutaArchivo);
 
-        console.log('layer1:', layer1);
-        console.log('layer1.length:', layer1.length);
         const worksheet = workbook.getWorksheet(1); // Obtener la primera hoja del libro de trabajo
 
         // Iterar sobre cada fila en la hoja de cálculo, comenzando desde la segunda fila
@@ -94,23 +92,20 @@ async function calcularNlay(layer1) {
             const layerv = row.getCell(8).text;
             
             if (layer1.length == 1 && layer1 == layer) {
-                console.log("dentro1");
+              
                 nlay1 = layerv;
                 nlay2 = layerv;
             }
             if (layer1.length >= 2 && layer1[0] == layer) {
-                console.log("dentro2  " + layer1[0] +"  "+ layer);
-                console.log(layerv);
+         
                 nlay1 = layerv;
             }
 
             if (layer1.length >= 2 && layer1[layer1.length - 1] == layer) {
-                console.log("dentro3"+ layer1[1] +"  "+  layer);
-                console.log(layerv);
+               
                 nlay2 = layerv;
             }
             if (layer1.length == 0 && layer1 == layer) {
-                console.log("dentro4");
                 nlay1 = 0;
                 nlay2 = 27;
             }
