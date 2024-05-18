@@ -5,6 +5,8 @@ const db = require('./config/dbconnector');
 const routes = require('./routes');
 const cleanExpiredSessions = require('./middlewares/cleanExpiredSessions');
 const cookieParser = require('cookie-parser');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,10 +26,32 @@ app.use(cookieParser());
 // Usar cleanExpiredSessions(limpia sesiones expiradas)
 app.use(cleanExpiredSessions);
 
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Documentation',
+      version: '1.0.0',
+      description: 'Documentación de la API del proyecto'
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor de desarrollo'
+      }
+    ],
+    
+  },
+  apis: ['./routes/*.js'] // Ruta a los archivos de las rutas
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 // Montar las rutas
 app.use('/api', routes);
 
 // Iniciar el servidor
-  app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-  });
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
