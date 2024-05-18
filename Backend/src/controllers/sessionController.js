@@ -31,8 +31,9 @@ const createSession = async (req, res) => {
     console.log('Nueva sesión creada:', newSession);
     
      // Establecer una cookie de sesión en la respuesta
-     res.cookie('sessionId', newSession.session_id, { maxAge: 120 * 60 * 1000, httpOnly: true, secure: true });
-    
+     res.cookie('sessionId', newSession.session_id, { maxAge: 120 * 60 * 1000, httpOnly: true, secure: false });
+     console.log('Cookie de sesión establecida:', newSession.session_id);
+
     res.status(201).json(newSession);
   } catch (error) {
     console.error('Error al intentar crear una nueva sesión:', error);

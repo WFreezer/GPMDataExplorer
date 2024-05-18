@@ -23,14 +23,16 @@ export class SessionService {
   }
 
   setSessionId(sessionId: string) {
+    console.log('Estableciendo sessionId en la cookie:', sessionId);
     this.cookieService.set('sessionId', sessionId, 2 * 60 * 60);
   }
-
-  getSessionId(): string | undefined {
+  
+  getSessionId(): string  {
     const sessionId = this.cookieService.get('sessionId');
+    console.log('Obteniendo sessionId de la cookie:', sessionId);
     return sessionId;
   }
-
+  
   createSession(username: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/sessions`, { username });
   }
