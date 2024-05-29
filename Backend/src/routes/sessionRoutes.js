@@ -45,7 +45,7 @@ router.get('/', sessionController.getAllSessions);
  *               username:
  *                 type: string
  *                 description: Nombre de usuario para la sesión
- *                 example: "johndoe"
+ *                 example: "Amanda"
  *     responses:
  *       201:
  *         description: Sesión creada

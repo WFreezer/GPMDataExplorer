@@ -65,7 +65,10 @@
     <label class="date-range-text">Select Variables:<span *ngIf="!areVariablesSelected()" style="color: red;">Please
         select at least one variable.</span></label>
     <button (click)="toggleSelectedVariables()">Variables</button>
+    
     <div *ngIf="isSelectorVariablesOpen" class="filter">
+      <!-- Enlace a la página de descarga del PDF con texto en inglés -->
+  <a href="https://gpm.nasa.gov/resources/documents/gpm-level-3-gprof-version-07-information" target="_blank">Download Variable Information PDF</a>
       <div *ngFor="let variable of variables">
         <input type="checkbox" id="{{ variable.id }}" [(ngModel)]="selectedVariables[variable.id]" [title]="variable.description">
         <label for="{{ variable.id }}" [title]="variable.description">{{ variable.value }}</label>

@@ -30,9 +30,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Documentation',
+      title: 'GPMDataExplorer',
       version: '1.0.0',
-      description: 'Documentación de la API del proyecto'
+      description: 'Documentación de la API del proyecto GPMDataExplorer para el Trabajo de Fin de Grado de Ingeniería Informática de la Universidad Politécnica de Madrid'
     },
     servers: [
       {

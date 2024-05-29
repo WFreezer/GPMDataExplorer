@@ -8,14 +8,14 @@
       <h1>GpmDataExplorer</h1>
     </div>
     <div class="error-message" *ngIf="showErrorMessage">
-      Por favor, ingrese un nombre.
+      Please enter a name.
     </div>
     <hr>
     <div class="input-box">
-      <label for="username">Nombre: </label>
+      <label for="username">Name: </label>
       <input type="text" id="username" [(ngModel)]="username" />
       <br><br>
-      <button (click)="comenzar()">Iniciar</button>
+      <button (click)="comenzar()">Start</button>
     </div>
   </div>
 </div>

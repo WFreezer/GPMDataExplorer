@@ -28,7 +28,7 @@ const getLayers = async (req, res) => {
 // Función para crear un nuevo filtro
 const createFilter = async (req, res) => {
     try {
-        const filterData = req.body; // Suponiendo que los datos del filtro están en el cuerpo de la solicitud
+        const filterData = req.body; 
         const newFilter = await filterModel.createFilter(filterData);
         res.status(201).json({ success: true, filter: newFilter });
     } catch (error) {
