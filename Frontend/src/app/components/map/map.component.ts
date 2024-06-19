@@ -16,11 +16,11 @@ export class MapComponent implements AfterViewInit {
   private map: any;
   private drawnItems: any; // Almacena las capas dibujadas
   private isRectangleDrawn: boolean = false; // Bandera para indicar si ya se ha dibujado un rectángulo
-  private allowedBounds: any; // Limites permitidos para el dibujo del rectangulo
+  private allowedBounds: any; // Limites permitidos para el dibujo del rectángulo
   public selectedCoordinates: string = '';
   productId: any;
 
-  constructor(private route: ActivatedRoute,private router: Router,private filterService: FilterService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private filterService: FilterService) { }
 
   ngAfterViewInit(): void {
     // Obtener productId de los parámetros de ruta
@@ -31,30 +31,29 @@ export class MapComponent implements AfterViewInit {
   }
 
   private initializeMap() {
-     // Crear el mapa con la vista del mundo entero
-     this.map = L.map('map').setView([0, 0], 2);
+    // Crear el mapa con la vista del mundo entero
+    this.map = L.map('map').setView([0, 0], 2);
 
-     // Agregar la capa de teselas
-     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-     }).addTo(this.map);
-     
-     //-180,-70,180,70
-     // Definir las coordenadas de la región permitida para dibujar el rectángulo
-     const southWest = L.latLng(-70, -180);
-     const northEast = L.latLng(70, 180);
-     this.allowedBounds = L.latLngBounds(southWest, northEast);
-
-     // Crear un rectángulo para visualizar las áreas permitidas
-     L.rectangle(this.allowedBounds, {
-       color: 'green',
-       fillOpacity: 0.1
-     }).addTo(this.map);
-    // Ajustar la vista del mapa para mostrar la región
+    // Agregar la capa de teselas
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
     
+    // Definir las coordenadas de la región permitida para dibujar el rectángulo
+    const southWest = L.latLng(-70, -180);
+    const northEast = L.latLng(70, 180);
+    this.allowedBounds = L.latLngBounds(southWest, northEast);
+
+    // Crear un rectángulo para visualizar las áreas permitidas
+    L.rectangle(this.allowedBounds, {
+      color: 'green',
+      fillOpacity: 0.1
+    }).addTo(this.map);
+    
+    // Ajustar la vista del mapa para mostrar la región permitida
     this.map.fitBounds(this.allowedBounds);
 
-    //Inicializar Leaflet.draw
+    // Inicializar Leaflet.draw
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
 
@@ -65,15 +64,19 @@ export class MapComponent implements AfterViewInit {
           shapeOptions: {
             color: 'red'
           },
-          repeatMode: true
+          repeatMode: false
         },
-        circlemarker:false,
+        circlemarker: false,
         circle: false,
         marker: false,
         polyline: false
       },
-      
+      edit: {
+        featureGroup: this.drawnItems,
+        remove: false
+      }
     });
+
     this.map.addControl(drawControl);
 
     // Manejar el evento de dibujo completado
@@ -81,27 +84,28 @@ export class MapComponent implements AfterViewInit {
       if (this.isRectangleDrawn) {
         this.drawnItems.clearLayers(); // Eliminar el rectángulo anterior si ya se ha dibujado uno
       }
+
       const layer = event.layer;
-      this.drawnItems.addLayer(layer); // Agregar la capa dibujada al FeatureGroup
-      this.isRectangleDrawn = true; // Establecer la bandera a true para indicar que se ha dibujado un rectángulo
       const drawnRectangleBounds = layer.getBounds(); // Obtener los límites del rectángulo dibujado
 
       // Verificar si los límites del rectángulo dibujado están dentro de las coordenadas permitidas
       if (this.allowedBounds.contains(drawnRectangleBounds)) {
-        // Si está dentro de las coordenadas permitidas, agregar el rectángulo al FeatureGroup
-        this.drawnItems.addLayer(layer);
+        this.drawnItems.addLayer(layer); // Agregar la capa dibujada al FeatureGroup
+        this.isRectangleDrawn = true; // Establecer la bandera a true para indicar que se ha dibujado un rectángulo
+
+        // Actualizar las coordenadas seleccionadas
+        this.selectedCoordinates = this.getRectangleCoordinates(layer).join(', ');
+        
+        // Guardar las coordenadas utilizando el servicio
+        this.filterService.setRectangleCoordinates(this.getRectangleCoordinates(layer));
       } else {
-        // Si está fuera de las coordenadas permitidas, mostrar un mensaje al usuario o realizar alguna otra acción
+        // Mostrar un mensaje al usuario y eliminar el rectángulo dibujado
         this.drawnItems.clearLayers();
-        alert('El rectángulo debe estar dentro de las coordenadas permitidas.');
+        alert('The rectangle must be within the allowed coordinates.');
       }
-      // Actualizar las coordenadas seleccionadas
-  this.selectedCoordinates = this.getRectangleCoordinates(event.layer).join(', ');
-    // Guardar las coordenadas utilizando el Subject
-    this.filterService.setRectangleCoordinates(this.getRectangleCoordinates(event.layer));
     });
-    
   }
+
   saveRectangleCoordinates(): void {
     const layers = this.drawnItems.getLayers(); // Obtener todas las capas dibujadas
     if (layers.length > 0) {
@@ -110,7 +114,7 @@ export class MapComponent implements AfterViewInit {
       this.filterService.setRectangleCoordinates(coordinates); // Enviar las coordenadas al servicio
       this.router.navigate(['/filter', this.productId]);
     } else {
-      console.log('No hay ningún rectángulo dibujado.');
+      console.log('No rectangle has been drawn.');
     }
   }
   
@@ -119,10 +123,10 @@ export class MapComponent implements AfterViewInit {
     const southWest = bounds.getSouthWest();
     const northEast = bounds.getNorthEast();
     const coordinates = [
-      southWest.lat.toFixed(2), // Latitud mínima
       southWest.lng.toFixed(2), // Longitud mínima
-      northEast.lat.toFixed(2), // Latitud máxima
-      northEast.lng.toFixed(2)  // Longitud máxima
+      southWest.lat.toFixed(2), // Latitud mínima
+      northEast.lng.toFixed(2), // Longitud máxima
+      northEast.lat.toFixed(2)  // Latitud máxima
     ];
     return coordinates;
   }

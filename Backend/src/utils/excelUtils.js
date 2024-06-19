@@ -22,9 +22,11 @@ async function calcularNlon(lon1, lon2) {
 
             // Verificar si lon1 y lon2 están dentro del rango LONmax y LONmin
             if (lon1 >= LONmax && lon1 < LONmin) {
+                console.log("lon1 ->"+lon1+ " LONmax -> " + LONmax + " LONmin->" + LONmin);
                 nlon1 = nlon; // Asignar el valor de nlon a nlon1
             }
             if (lon2 >= LONmax && lon2 < LONmin) {
+                console.log("lon2 ->"+lon2+ " LONmax -> " + LONmax + " LONmin->" + LONmin);
                 nlon2 = nlon; // Asignar el valor de nlon a nlon2
             }
 

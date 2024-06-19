@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DownloadServiceService {
+export class DownloadService {
 
   private baseUrl = 'http://localhost:3000/api/opendap'; // Cambia la URL base según tu configuración
 
@@ -15,4 +15,6 @@ export class DownloadServiceService {
     const url = `${this.baseUrl}/generar-url/${idFilter}`;
     return this.http.get<any>(url);
   }
+
+  
 }
