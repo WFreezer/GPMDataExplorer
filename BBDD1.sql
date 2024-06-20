@@ -65,6 +65,7 @@ CREATE TABLE filter (
 
 -- Crear tabla meteorological_data
 CREATE TABLE meteorological_data (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   id_filter INT,
   day DATE,
   nlat DECIMAL,
@@ -84,11 +85,10 @@ CREATE TABLE meteorological_data (
   graupel DECIMAL,
   latentHeating DECIMAL,
   surfaceTypeIndex INT,
-  fractionQueality0 DECIMAL,
-  fractionQueality1 DECIMAL,
-  fractionQueality2 DECIMAL,
-  fractionQueality3 DECIMAL,
-  PRIMARY KEY (id_filter, day),
+  fractionQuality0 DECIMAL,
+  fractionQuality1 DECIMAL,
+  fractionQuality2 DECIMAL,
+  fractionQuality3 DECIMAL,
   FOREIGN KEY (id_filter) REFERENCES filter(id_filter)
 );
 

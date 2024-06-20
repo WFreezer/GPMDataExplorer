@@ -74,4 +74,5 @@ const generarURL = async (req, res) => {
   }
 };
 
+
 module.exports = { generarURL };
