@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DownloadService } from 'src/app/services/download.service';
-import { FilterService } from 'src/app/services/filter.service';
-
+import * as moment from 'moment'; // Importa moment.js para formateo de fechas
 
 
 @Component({
@@ -17,8 +16,8 @@ import { FilterService } from 'src/app/services/filter.service';
 export class DataDownloadComponent implements OnInit {
   idFilter: number; // Variable para almacenar el ID del filtro
   urls: string[] = []; // Arreglo para almacenar las URLs generadas
-  productId: number;
-  selectedFile: File;
+  fechas: string[] = [];
+  
   constructor(private route: ActivatedRoute,
     private router: Router,
     private downloadService: DownloadService) { }
@@ -34,11 +33,10 @@ export class DataDownloadComponent implements OnInit {
   }
 
   generarURLs(): void {
-    // Llama al servicio para generar las URLs
     this.downloadService.generarURL(this.idFilter).subscribe(
       (response) => {
-        // Maneja la respuesta y asigna las URLs al arreglo urls
         this.urls = response.urls;
+        this.fechas = this.urls.map(url => this.extraerFecha(url));
       },
       (error) => {
         console.error('Error al generar las URLs:', error);
@@ -46,12 +44,44 @@ export class DataDownloadComponent implements OnInit {
     );
   }
 
+  extraerFecha(url: string): string {
+    const regex = /(\d{4})(\d{2})(\d{2})-S\d{6}-E\d{6}/;
+    const match = url.match(regex);
+  
+    if (match) {
+      const year = match[1];
+      const month = match[2];
+      const day = match[3];
+  
+      // Formato YYYY-MM-DD
+      return `${year}-${month}-${day}`;
+    } else {
+      return 'Fecha no encontrada en la URL';
+    }
+  }
+  
+
+  
+
   truncateUrl(url: string): string {
     const maxLength = 164; // Máxima longitud de la URL a mostrar
     return url.length > maxLength ? url.substring(0, maxLength) + '...' : url;
   }
 
 
+  redirectToTable(fecha: string): void {
+    this.router.navigate(['/table-view'], { queryParams: { date: fecha } });
+    this.downloadService.importCSV(this.idFilter, fecha).subscribe(
+      (response) => {
+        console.log('CSV import successful:', response);
+        // Aquí puedes manejar la respuesta del servicio si es necesario
+      },
+      (error) => {
+        console.error('Error importing CSV:', error);
+        // Aquí puedes manejar el error del servicio si es necesario
+      }
+    );
+  }
 
 
   navigateToRadiometerSelection(): void {

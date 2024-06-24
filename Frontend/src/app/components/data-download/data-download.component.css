@@ -1,3 +1,4 @@
+/* Estilos para el encabezado */
 h2 {
   padding: 10px;
   font-size: 24px;
@@ -9,12 +10,14 @@ h2 {
   border-radius: 10px;
 }
 
+/* Estilos para el contenedor principal */
 .container {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  margin: 20px auto; /* Centrado horizontal con margen automático */
+  max-width: 800px; /* Ancho máximo del contenedor */
 }
 
 /* Estilos para la lista de URLs */
@@ -26,15 +29,20 @@ h2 {
 /* Estilos para cada elemento de URL */
 .url-item {
   display: flex; /* Usa flexbox para alinear elementos en una línea */
-  align-items: center; /* Alinea verticalmente al centro */
-  margin-bottom: 10px; /* Espacio entre elementos */
+  flex-direction: column; /* Alinea los elementos en columna */
+  margin-bottom: 15px; /* Espacio entre elementos */
+}
+
+/* Estilos para la fecha */
+.date {
+  font-weight: bold; /* Texto en negrita */
+  margin: 5px 10px; /* Ajusta los márgenes según sea necesario */
 }
 
 /* Estilos para cada enlace */
 .truncated-url {
-  flex-grow: 1; /* Permite que el enlace ocupe todo el espacio disponible */
-  padding: 10px 0; /* Ajusta el relleno según sea necesario */
-  margin-right: 10px; /* Espacio entre el enlace y el botón */
+  display: block; /* Asegura que sea un bloque para manejar el ancho correctamente */
+  padding: 5px 10px; /* Ajusta el relleno según sea necesario */
   border-bottom: 1px solid #ccc; /* Agrega una línea horizontal */
   text-decoration: none; /* Elimina el subrayado predeterminado */
   color: #333; /* Cambia el color del texto si lo deseas */
@@ -49,11 +57,13 @@ h2 {
   cursor: pointer; /* Cambia el cursor al pasar el mouse */
 }
 
+/* Estilos para el contenedor de botones */
 .button-container {
   text-align: center; /* Centrar los botones horizontalmente */
   margin-top: 20px; /* Espacio en la parte superior para separarlos de los elementos anteriores */
 }
 
+/* Estilos para el botón */
 .styled-button {
   background-color: #4CAF50; /* Color de fondo */
   border: none; /* Sin borde */
@@ -68,9 +78,7 @@ h2 {
   border-radius: 4px; /* Bordes redondeados */
 }
 
-/* Estilos de hover para el botón principal */
+/* Estilos de hover para el botón */
 .styled-button:hover {
   background-color: #8e4ebc; /* Cambia el color de fondo al pasar el mouse */
 }
-
-

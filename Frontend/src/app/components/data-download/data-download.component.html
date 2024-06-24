@@ -2,10 +2,19 @@
 <div class="container">
   <p>The generated URLs correspond to the days selected in the filters:</p>
   <ul class="url-list">
-    <li *ngFor="let url of urls" class="url-item">
-      <a [href]="url" target="_blank" class="truncated-url">{{ truncateUrl(url) }}</a>
+    <li *ngFor="let url of urls; let i = index" class="url-item">
+      <div class="url-info">
+        <div class="date"><strong>{{ fechas[i] }}</strong></div>
+        <div class="url-content">
+          <a [href]="url" target="_blank" class="truncated-url">{{ truncateUrl(url) }}</a>
+        </div>
+      </div>
+      <button class="styled-button" type="button"  type="button" (click)="redirectToTable(fechas[i])">View table</button>
     </li>
   </ul>
+  
+  
+  <br>
   <p>To access the URLs, registration is required. <a href="https://urs.earthdata.nasa.gov/" target="_blank">Register here</a>.</p>
   
  

@@ -6,6 +6,7 @@ import { SatelliteselectionComponent } from './components/satelliteselection/sat
 import { FilterComponent } from './components/filter/filter.component';
 import { MapComponent } from './components/map/map.component';
 import { DataDownloadComponent } from './components/data-download/data-download.component';
+import { TableviewComponent } from './components/tableview/tableview.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Esta es la ruta raíz que apunta al componente Home
@@ -13,8 +14,8 @@ const routes: Routes = [
   { path: 'satelliteselection/:radiometerId', component: SatelliteselectionComponent },
   { path: 'filter/:productId', component: FilterComponent },
   { path: 'map/:productId', component: MapComponent },
-  { path: 'data-download/:id_filter', component: DataDownloadComponent } // Agrega la ruta para el componente DataDownloadComponent
-  
+  { path: 'data-download/:id_filter', component: DataDownloadComponent }, 
+  { path: 'table-view', component: TableviewComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
