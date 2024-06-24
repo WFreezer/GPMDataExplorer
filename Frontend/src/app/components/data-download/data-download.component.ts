@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DownloadService } from 'src/app/services/download.service';
-import * as moment from 'moment'; // Importa moment.js para formateo de fechas
+
 
 
 @Component({
@@ -70,7 +70,7 @@ export class DataDownloadComponent implements OnInit {
 
 
   redirectToTable(fecha: string): void {
-    this.router.navigate(['/table-view'], { queryParams: { date: fecha } });
+    this.router.navigate(['/table-view'], { queryParams: { date: fecha, id_filter: this.idFilter } });
     this.downloadService.importCSV(this.idFilter, fecha).subscribe(
       (response) => {
         console.log('CSV import successful:', response);

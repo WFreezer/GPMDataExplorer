@@ -1,4 +1,58 @@
 <div class="container">
-    <p>Data for the date: <strong>{{ fecha }}</strong> (AAAA-MM-DD)</p>
-  </div>
-  
+    <h2>Data for the date: <strong>{{ fecha }}</strong> (AAAA-MM-DD)</h2>
+
+    <div class="table-wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>nlat</th>
+                    <th>nlon</th>
+                    <th>nlayer</th>
+                    <th>npix</th>
+                    <th>npixPrecipitation</th>
+                    <th>Surface Precipitation</th>
+                    <th>Convective Precipitation</th>
+                    <th>Frozen Precipitation</th>
+                    <th>Rain Water Path</th>
+                    <th>Cloud Water Path</th>
+                    <th>Ice Water Path</th>
+                    <th>Rain Water</th>
+                    <th>Cloud Water</th>
+                    <th>Snow</th>
+                    <th>Graupel</th>
+                    <th>Latent Heating</th>
+                    <th>Surface Type Index</th>
+                    <th>Fraction Quality 0</th>
+                    <th>Fraction Quality 1</th>
+                    <th>Fraction Quality 2</th>
+                    <th>Fraction Quality 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of meteorologicalData">
+                    <td>{{ data.nlat }}</td>
+                    <td>{{ data.nlon }}</td>
+                    <td>{{ data.nlayer }}</td>
+                    <td>{{ data.npix }}</td>
+                    <td>{{ data.npixPrecipitation }}</td>
+                    <td>{{ data.surfacePrecipitation }}</td>
+                    <td>{{ data.convectivePrecipitation }}</td>
+                    <td>{{ data.frozenPrecipitation }}</td>
+                    <td>{{ data.rainWaterPath }}</td>
+                    <td>{{ data.cloudWaterPath }}</td>
+                    <td>{{ data.iceWaterPath }}</td>
+                    <td>{{ data.rainWater }}</td>
+                    <td>{{ data.cloudWater }}</td>
+                    <td>{{ data.snow }}</td>
+                    <td>{{ data.graupel }}</td>
+                    <td>{{ data.latentHeating }}</td>
+                    <td>{{ data.surfaceTypeIndex }}</td>
+                    <td>{{ data.fractionQuality0 }}</td>
+                    <td>{{ data.fractionQuality1 }}</td>
+                    <td>{{ data.fractionQuality2 }}</td>
+                    <td>{{ data.fractionQuality3 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
