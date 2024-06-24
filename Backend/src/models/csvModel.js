@@ -4,7 +4,7 @@ const db = require('../config/dbconnector');
 const CsvModel = {
     // Función para insertar datos desde el archivo CSV a la base de datos
     insertCSVData: async (data) => {
-        
+
         const query = `
             INSERT INTO meteorological_data (
                 id_filter, day, nlat, nlon, nlayer, npix, npixPrecipitation, surfacePrecipitation,
@@ -20,14 +20,29 @@ const CsvModel = {
             item.latentHeating, item.surfaceTypeIndex, item.fractionQuality0, item.fractionQuality1,
             item.fractionQuality2, item.fractionQuality3
         ]);
-        
+
         try {
-            
+
 
             await db.query(query, [values]);
             console.log('Datos insertados correctamente en la base de datos');
         } catch (error) {
             throw new Error(`Error inserting CSV data: ${error.message}`);
+        }
+    },
+
+
+    // Función para obtener datos de la tabla meteorological_data
+    getMeteorologicalData: async (idFilter, day) => {
+        const query = `
+        SELECT * FROM meteorological_data
+        WHERE id_filter = ? AND day = ?`;
+
+        try {
+            const result = await db.query(query, [idFilter, day]);
+            return result;
+        } catch (error) {
+            throw new Error(`Error fetching meteorological data: ${error.message}`);
         }
     }
 };

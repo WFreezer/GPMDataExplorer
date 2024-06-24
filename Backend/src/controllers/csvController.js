@@ -81,7 +81,25 @@ const importCSVToDatabase = async (req, res) => {
 };
 
 
+const getMeteorologicalData = async (req, res) => {
+    const { id_filter, day } = req.query;
+
+    try {
+        // Llama a la función del modelo para obtener los datos filtrados
+        const meteorologicalData = await CsvModel.getMeteorologicalData(id_filter, day);
+        
+        if (meteorologicalData.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron datos para los filtros proporcionados' });
+        }
+
+        res.status(200).json(meteorologicalData);
+    } catch (error) {
+        console.error('Error al obtener datos meteorológicos:', error);
+        res.status(500).json({ error: 'Error al obtener datos meteorológicos' });
+    }
+};
 
 module.exports = {
-    importCSVToDatabase
+    importCSVToDatabase,
+    getMeteorologicalData
 };
