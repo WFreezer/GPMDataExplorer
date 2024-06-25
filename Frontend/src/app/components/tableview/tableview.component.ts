@@ -30,6 +30,7 @@ export class TableviewComponent implements OnInit {
 
   // Método para obtener datos meteorológicos usando el servicio
   getMeteorologicalData(): void {
+   
     this.downloadService.getMeteorologicalData(this.idFilter, this.fecha)
       .subscribe(
         (data) => {

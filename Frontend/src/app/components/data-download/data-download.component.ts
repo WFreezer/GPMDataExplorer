@@ -70,17 +70,19 @@ export class DataDownloadComponent implements OnInit {
 
 
   redirectToTable(fecha: string): void {
-    this.router.navigate(['/table-view'], { queryParams: { date: fecha, id_filter: this.idFilter } });
     this.downloadService.importCSV(this.idFilter, fecha).subscribe(
       (response) => {
         console.log('CSV import successful:', response);
-        // Aquí puedes manejar la respuesta del servicio si es necesario
+        this.router.navigate(['/table-view'], { queryParams: { date: fecha, id_filter: this.idFilter } });
       },
       (error) => {
         console.error('Error importing CSV:', error);
         // Aquí puedes manejar el error del servicio si es necesario
       }
     );
+
+    
+   
   }
 
 

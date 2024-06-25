@@ -10,6 +10,10 @@ const cleanExpiredSessions = async (req, res, next) => {
             // Obtener los IDs de las sesiones expiradas
             const expiredSessionIds = expiredSessions.map(session => session.session_id);
 
+             // Eliminar datos meteorológicos asociados a los filtros eliminados
+             const deleteMeteorologicalDataQuery = `DELETE FROM meteorological_data WHERE id_filter IN (SELECT id_filter FROM filter WHERE product_id IN (SELECT product_id FROM product WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')})))`;
+             await db.query(deleteMeteorologicalDataQuery);
+ 
              // Eliminar filtros asociados a los productos eliminados
              const deleteFiltersQuery = `DELETE FROM filter WHERE product_id IN (SELECT product_id FROM product WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')}))`;
              await db.query(deleteFiltersQuery);
@@ -18,10 +22,7 @@ const cleanExpiredSessions = async (req, res, next) => {
             const deleteProductsQuery = `DELETE FROM product WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')})`;
             await db.query(deleteProductsQuery);
 
-            // Eliminar datos meteorológicos asociados a los filtros eliminados
-            const deleteMeteorologicalDataQuery = `DELETE FROM meteorological_data WHERE id_filter IN (SELECT id_filter FROM filter WHERE product_id IN (SELECT product_id FROM product WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')})))`;
-            await db.query(deleteMeteorologicalDataQuery);
-
+           
             // Eliminar las sesiones expiradas de la tabla de sesiones
             const deleteSessionsQuery = `DELETE FROM session WHERE session_id IN (${expiredSessionIds.map(id => `'${id}'`).join(',')})`;
             await db.query(deleteSessionsQuery);

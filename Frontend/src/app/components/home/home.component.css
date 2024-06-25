@@ -1,119 +1,84 @@
+body {
+  font-size: 16px; /* Tamaño base de fuente */
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 0 20px;
-  /* Añade un relleno a los lados para pantallas más pequeñas */
-}
-
-.header {
-  text-align: center;
-  /* Alinea el texto al centro en todas las pantallas */
-  margin-bottom: 20px;
+  padding: 2vh 2vw; /* Usar vw y vh para el relleno */
 }
 
 .main-content {
   text-align: center;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
+  border: 0.2em solid #ccc; /* Ajusta el grosor del borde proporcionalmente */
+  border-radius: 1em; /* Ajusta los bordes redondeados proporcionalmente */
+  padding: 2em; /* Utiliza unidades relativas para el padding */
   background-color: #f9f9f9;
-  max-width: 100%;
-  /* Limita el ancho máximo del contenido principal */
-  margin: 0 auto;
-  /* Centra el contenido horizontalmente */
-
+  width: 80%; /* Establece un ancho específico */
+  max-width: 600px; /* Limita el ancho máximo */
+  margin: 1em auto; /* Ajusta los márgenes proporcionalmente */
+  box-sizing: border-box; /* Incluye relleno y borde en el ancho total */
 }
 
 @media screen and (max-width: 600px) {
   .main-content {
-    max-width: 80%;
-    /* Limita el ancho del contenido en pantallas pequeñas */
-    margin: 0 auto;
-    /* Centra el contenido horizontalmente */
-    padding: 10px;
-    /* Ajusta el relleno del contenido principal en pantallas pequeñas */
+    width: 90%; /* Ajusta el ancho en pantallas pequeñas */
+    padding: 1.5em; /* Utiliza unidades relativas para el padding */
   }
-
-  /* Ajusta el tamaño de fuente y el espaciado del título en pantallas pequeñas */
-  .main-content h1 {
-    font-size: 24px !important;
-    /* Ajusta el tamaño del título para pantallas pequeñas */
-    margin-bottom: 10px;
-    /* Añade un margen inferior para separar el título del contenido */
-    word-wrap: break-word;
-    /* Permite que las palabras se dividan automáticamente si son demasiado largas */
-  }
-
 }
 
 .welcome {
-  margin-bottom: 20px;
-  /* Añade un espacio entre el título y el recuadro de nombre */
+  margin-bottom: 1.5em; /* Ajusta el margen inferior proporcionalmente */
 }
 
 .welcome h1 {
   font-family: "Arial Black", sans-serif;
-  /* Cambia la fuente del título */
   color: #333;
-  /* Cambia el color del texto del título */
-  font-size: 36px;
-  /* Ajusta el tamaño del texto del título */
-  margin-bottom: 10px;
-  /* Ajusta el margen inferior del título */
+  font-size: 2.4em; /* Utiliza unidades relativas para el tamaño de la fuente */
+  margin-bottom: 0.5em;
 }
 
 .input-box {
-  margin-top: 10px;
-  /* Ajusta el margen superior */
+  margin-top: 1.5em; /* Ajusta el margen superior proporcionalmente */
 }
 
 .input-box label {
-  margin-right: 5px;
-  /* Ajusta el margen derecho del label */
+  margin-right: 0.5em; /* Utiliza unidades relativas para los márgenes */
 }
 
 input {
-  padding: 5px;
-  /* Ajusta el relleno */
-  margin-right: 5px;
-  /* Ajusta el margen derecho */
+  padding: 0.5em; /* Utiliza unidades relativas para el padding */
+  margin-right: 0.5em;
   max-width: 100%;
+  font-size: 1em; /* Ajusta el tamaño de la fuente proporcionalmente */
 }
 
 hr {
-  width: 70%;
-  /* Ajusta la longitud de la línea divisoria */
+  width: 75%; /* Ajusta el ancho de la línea divisoria proporcionalmente */
   border: none;
-  border-top: 1px solid #ccc;
-  /* Cambia el color de la línea divisoria */
-  margin: 20px auto;
-  /* Ajusta el margen de la línea divisoria */
+  border-top: 0.05em solid #ccc; /* Ajusta el grosor de la línea proporcionalmente */
+  margin: 2em auto; /* Ajusta el margen proporcionalmente */
 }
 
 button {
-  padding: 10px 20px;
+  padding: 0.75em 1.5em; /* Utiliza unidades relativas para el padding */
   background-color: #87e3c1;
-  /* Cambia el color de fondo del botón */
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5em; /* Ajusta los bordes redondeados proporcionalmente */
   cursor: pointer;
   font-family: Arial, sans-serif;
-  /* Cambia la fuente del botón */
-  font-size: 16px;
-  /* Ajusta el tamaño de la fuente del botón */
+  font-size: 1.1em; /* Ajusta el tamaño de la fuente proporcionalmente */
 }
 
 button:hover {
   background-color: #8e4ebc;
-  /* Cambia el color de fondo al pasar sobre el botón */
 }
 
 .error-message {
   color: red;
-  margin-top: 10px;
-  /* Ajusta el margen superior del mensaje de error */
+  margin-top: 1em; /* Ajusta el margen superior proporcionalmente */
 }
